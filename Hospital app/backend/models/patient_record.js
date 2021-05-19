@@ -38,7 +38,8 @@ const patientRecordSchema = mongoose.Schema({
     },
     o2_niv_mv_level: Number,
     doctors: Array,
-    nurses: Array
+    nurses: Array,
+    hospital_id: String
 })
 
 const patientRecordModel = mongoose.model('patient_record',patientRecordSchema)

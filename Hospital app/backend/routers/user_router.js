@@ -6,7 +6,7 @@ const userRouter = express.Router()
 userRouter.post('/add', async (req,res) => {
     try {
         const details = req.body
-        const checkDoctor = await userModel.findOne({email: details.email})
+        const checkDoctor = await userModel.findOne({mobile_no: details.mobile_no})
         if(checkDoctor){
             res.send('User Already exist')
         }
