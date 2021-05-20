@@ -1,38 +1,53 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import { StyleSheet,TextInput, Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { Button,  } from 'react-native-paper';
 
 const PatientEntryForm = () => {
 
     const styles = StyleSheet.create({
         container: {
-            flex: 1,
-            backgroundColor: '#fff',
-        
+            width:"100%",
+            height:"100%",
+            paddingTop: 20,
+            paddingBottom: 20,
+            paddingRight: 10,
+            paddingLeft: 10
         },
         title: {
-            fontSize: 25,
-            marginLeft: 18,
-            marginTop: 20,
+            fontSize: 23,
+            fontWeight: 'bold',
         },
         textInput: {
-            marginLeft: 20,
-            marginRight: 20,
-            marginTop: 15,
+            marginTop: 10,
+            borderWidth: 1,
+            borderColor: '#a2a2a2',
+            borderRadius: 5,
+            fontSize: 20,
+            lineHeight: 30,
+            padding: 10
         },
         smallFieldsContainer: {
             flexDirection: 'row',
-            marginLeft: 20,
-            marginRight: 20,
-            marginTop: 15,
+            marginTop: 10,
         }, 
         smallTextInput: {
             flex: 1,
+            borderWidth: 1,
+            borderColor: '#a2a2a2',
+            borderRadius: 5,
+            fontSize: 20,
+            lineHeight: 30,
+            padding: 10
         },
         submitButton: {
-            marginLeft: 20,
-            marginRight: 20,
-            marginTop: 25,
+            fontWeight: 'bold',
+            color: 'white',
+            backgroundColor: '#0481eb',
+            borderRadius: 3,
+            textAlign: 'center',
+            padding: 10,
+            fontSize: 20,
+            marginTop: 20
         }
     });
 
@@ -65,102 +80,82 @@ const PatientEntryForm = () => {
         <>
             <ScrollView style={styles.container}>
                 <KeyboardAvoidingView behavior="padding">
-                    <StatusBar backgroundColor="blue" />
+                    <StatusBar backgroundColor="#0481eb" />
                     
                     <Text style={styles.title}>Enter new patient information :</Text>
                     <TextInput 
-                        label='Patient Name'
-                        mode='outlined'
+                        placeholder='Patient Name'
                         value={patientName}
-                        theme={{colors:{primary: "blue"}}}
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.textInput}
                         onChangeText={(text)=>setPatientName(text)}
                     />
                     <TextInput 
-                        label='Duty Doctor Name'
-                        mode='outlined'
+                        placeholder='Duty Doctor Name'
                         value={doctorName}
-                        theme={{colors:{primary: "blue"}}}
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.textInput}
                         onChangeText={(text)=>setDoctorName(text)}
                     />
                     <View style={styles.smallFieldsContainer}>
                     <TextInput 
-                        label='Name of Ward'
-                        mode='outlined'
-                        theme={{colors:{primary: "blue"}}}
+                        placeholder='Name of Ward'
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        label='UHID'
-                        mode='outlined'
-                        theme={{colors:{primary: "blue"}}}
+                        placeholder='UHID'
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.smallTextInput} />
                     </View>
                     <View style={styles.smallFieldsContainer}>
                     <TextInput 
-                        label='Hospital No'
-                        mode='outlined'
-                        theme={{colors:{primary: "blue"}}}
+                        placeholder='Hospital No'
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        label='DOA'
-                        mode='outlined'
-                        theme={{colors:{primary: "blue"}}}
+                        placeholder='DOA'
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.smallTextInput} />
                     </View>
                     <View style={styles.smallFieldsContainer}>
                     <TextInput 
-                        label='Age'
-                        mode='outlined'
-                        theme={{colors:{primary: "blue"}}}
+                        placeholder='Age'
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        label='Sex'
-                        mode='outlined'
-                        theme={{colors:{primary: "blue"}}}
+                        placeholder='Sex'
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.smallTextInput} />
                     </View>
                     <View style={styles.smallFieldsContainer}>
                     <TextInput 
-                        label='PR'
-                        mode='outlined'
-                        theme={{colors:{primary: "blue"}}}
+                        placeholder='PR'
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        label='BP'
-                        mode='outlined'
-                        theme={{colors:{primary: "blue"}}}
+                        placeholder='BP'
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        label='RR'
-                        mode='outlined'
-                        theme={{colors:{primary: "blue"}}}
+                        placeholder='RR'
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.smallTextInput} />
                     </View>
                     <View style={styles.smallFieldsContainer}>
                     <TextInput 
-                        label='SPO2'
-                        mode='outlined'
-                        theme={{colors:{primary: "blue"}}}
+                        placeholder='SPO2'
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        label='o2 NIV MV'
-                        mode='outlined'
-                        theme={{colors:{primary: "blue"}}}
+                        placeholder='o2 NIV MV'
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        label='CO-MORBID compliments'
-                        mode='outlined'
-                        theme={{colors:{primary: "blue"}}}
+                        placeholder='Complaints'
+                        theme={{colors:{primary: "#0481eb"}}}
                         style={styles.smallTextInput} />
                     </View>
-                    <Button 
-                    style={styles.submitButton}
-                    theme={{'colors': {'primary': 'blue'}}}
-                    mode="contained"
-                    onPress={() => handleSubmit()}>
-                        submit
-                    </Button>
+                    <Text style={styles.submitButton}> Submit </Text>
                 </KeyboardAvoidingView>
             </ScrollView>
         </>

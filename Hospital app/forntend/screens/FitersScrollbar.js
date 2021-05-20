@@ -9,7 +9,7 @@ const FiltersScrollbar = () => {
     const styles = StyleSheet.create({
         scrollbar: {
             flexDirection: 'row',
-            justifyContent: 'space-around',
+            justifyContent: 'space-between',
         }
     });
     

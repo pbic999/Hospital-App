@@ -11,27 +11,27 @@ const PatientFilter = () => {
     const styles = StyleSheet.create({
         filterContainer: {
             flex: 1,
-            backgroundColor: '#fff'
+            backgroundColor: '#fff',
+            padding: 0
         },
         searchBar: {
-            backgroundColor: 'blue',
+            backgroundColor: '#0481eb',
         }
     })
 
     return(
         <View style={styles.filterContainer}>
             <SearchBar
-                placeholder="URID or Name"
+                placeholder="UHID or Name"
                 onChangeText={setSearch}
                 value={serach}
                 containerStyle={styles.searchBar}
                 inputContainerStyle={{backgroundColor: '#fff'}}
-                inputStyle={{color: 'blue'}}
+                inputStyle={{color: '#0481eb'}}
             />
-            <View style={{marginTop: 20}}>
+            <View style={{padding: 10}}>
                 <FiltersScrollbar />
             </View>
-            
             <PatientListScreen />
         </View>
     );

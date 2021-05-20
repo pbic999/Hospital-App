@@ -1,61 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { List } from 'react-native-paper';
 
 const PatientListScreen = () => {
 
-    const viewPatient = () => {
-        console.log("patien1");
+    const [patientList,setPatientList] = useState([])
+
+    useEffect(() => {
+        setPatientList(['patient1','patient2','patient3'])
+    },[])
+
+    const viewPatient = (x) => {
+        console.log(x);
     }
 
     return(
         <ScrollView>
-            <List.Item
-                title="Surya Siriki"
+            {patientList.map((x,index) => {
+                return <List.Item
+                title={x}
+                key={index}
                 description="20001"
-                onPress={() => viewPatient()}
+                onPress={() => viewPatient(x)}
             />
-            <List.Item
-                title="Surya Siriki"
-                description="20001"
-                onPress={() => viewPatient()}
-            />
-            <List.Item
-                title="Surya Siriki"
-                description="20001"
-            />
-            <List.Item
-                title="Surya Siriki"
-                description="20001"
-            />
-            <List.Item
-                title="Surya Siriki"
-                description="20001"
-            />
-            <List.Item
-                title="Surya Siriki"
-                description="20001"
-            />
-            <List.Item
-                title="Surya Siriki"
-                description="20001"
-            />
-            <List.Item
-                title="Surya Siriki"
-                description="20001"
-            />
-            <List.Item
-                title="Surya Siriki"
-                description="20001"
-            />
-            <List.Item
-                title="Surya Siriki"
-                description="20001"
-            />
-            <List.Item
-                title="Surya Siriki"
-                description="20001"
-            />
+            })}
         </ScrollView>
     );
 
