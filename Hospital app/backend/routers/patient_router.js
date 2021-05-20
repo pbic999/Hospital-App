@@ -62,7 +62,7 @@ patientRouter.post('/add/record', async (req,res)=> {
     }
 })
 
-patientRouter.get('/UHID/:UHID/:hospital_id:', async (req,res) => {
+/*patientRouter.get('/UHID/:UHID/:hospital_id:', async (req,res) => {
     try {
         const UHID = req.params.UHID
         const hospital_id = req.params.hospital_id
@@ -73,14 +73,14 @@ patientRouter.get('/UHID/:UHID/:hospital_id:', async (req,res) => {
         res.status(500).send(err)
         console.log(err);
     }
-})
+})*/
 
-patientRouter.get('/UHIDorName/:UHIDOrName/:hospital_id', async (req,res) => {
+patientRouter.get('/UHIDOrName/:UHIDOrName/:hospital_id', async (req,res) => {
     try {
         const UHIDOrName = req.params.UHIDOrName
         const hospital_id = req.params.hospital_id
-        const patient = await patientModel.find({$and: [{hospital_id,
-            $or: [{UHID: UHIDOrName,patient_name: UHIDOrName}]}]})
+        const patient = await patientModel.find({$and:[{hospital_id},
+            {$or:[{UHID:UHIDOrName},{patient_name:UHIDOrName}]}]})
         res.status(200).send(patient)
     }
     catch (err) {
