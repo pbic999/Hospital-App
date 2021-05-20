@@ -3,7 +3,6 @@ import mongoose from 'mongoose'
 const patientSchema = mongoose.Schema({
     s_no: {
         type: Number,
-        unique: true,
         require: true
     },
     ward_name: {
