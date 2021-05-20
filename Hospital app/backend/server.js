@@ -2,8 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import patientRouter from './routers/patient_router.js'
 import cors from 'cors'
-import doctorRouter from './routers/doctor_router.js'
-import nurseRouter from './routers/nurse_router.js'
+import userRouter from './routers/user_router.js'
 
 const app = express()
 const mongo_url = 'mongodb+srv://pbic:AsDf1234@cluster0.yrzjw.mongodb.net/patient?retryWrites=true&w=majority'
@@ -24,8 +23,7 @@ app.get('/', (req,res) => {
     res.send('hello')
 })
 app.use('/patient',patientRouter)
-app.use('/doctor',doctorRouter)
-app.use('/nurse',nurseRouter)
+app.use('/user',userRouter)
 
 app.listen(5000, ()=> {
     console.log('listining at port no 5000')

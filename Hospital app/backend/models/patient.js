@@ -12,11 +12,13 @@ const patientSchema = mongoose.Schema({
     },
     UHID: {
         type: String,
-        require: true
+        require: true,
+        unique: true
     },
     hospital_no: {
         type: Number,
-        require: true
+        require: true,
+        unique: true
     },
     doa: {
         type: String,
@@ -57,8 +59,12 @@ const patientSchema = mongoose.Schema({
     complaints: {
         type: String,
     },
+    o2_niv_mv_level: {
+        type: String,
+    },
     duty_doctor: Array,
-    duty_nurse: Array
+    duty_nurse: Array,
+    hospital_id: String
 })
 
 const patientModel = mongoose.model('patient',patientSchema)

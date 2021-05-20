@@ -16,6 +16,30 @@ patientRouter.post('/add', async (req,res) => {
     }
 })
 
+patientRouter.get('/name/:name', async (req,res) => {
+    try {
+        const patient_name = req.params.name
+        const patients = await patientModel.find({patient_name})
+        res.status(200).send(patients)
+    }
+    catch (err) {
+        res.status(500).send(err)
+        console.log(err);
+    }
+})
+
+patientRouter.get('/UHID/:UHID', async (req,res) => {
+    try {
+        const UHID = req.params.UHID
+        const patient = await patientModel.findOne({UHID})
+        res.status(200).send(patient)
+    }
+    catch (err) {
+        res.status(500).send(err)
+        console.log(err);
+    }
+})
+
 patientRouter.get('/DM', async (req,res) => {
     try {
         const patients = await patientModel.find({complaints: 'DM'})
