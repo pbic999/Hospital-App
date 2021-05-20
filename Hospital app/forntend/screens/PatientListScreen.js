@@ -13,6 +13,7 @@ const PatientListScreen = () => {
             <List.Item
                 title="Surya Siriki"
                 description="20001"
+                onPress={() => viewPatient()}
             />
             <List.Item
                 title="Surya Siriki"

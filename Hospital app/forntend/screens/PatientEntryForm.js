@@ -122,34 +122,34 @@ const PatientEntryForm = () => {
                     </View>
                     <View style={styles.smallFieldsContainer}>
                     <TextInput 
-                        label='Age'
+                        label='PR'
                         mode='outlined'
                         theme={{colors:{primary: "blue"}}}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        label='Sex'
+                        label='BP'
                         mode='outlined'
                         theme={{colors:{primary: "blue"}}}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        label='Sex'
+                        label='RR'
                         mode='outlined'
                         theme={{colors:{primary: "blue"}}}
                         style={styles.smallTextInput} />
                     </View>
                     <View style={styles.smallFieldsContainer}>
                     <TextInput 
-                        label='Age'
+                        label='SPO2'
                         mode='outlined'
                         theme={{colors:{primary: "blue"}}}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        label='Sex'
+                        label='o2 NIV MV'
                         mode='outlined'
                         theme={{colors:{primary: "blue"}}}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        label='Sex'
+                        label='CO-MORBID compliments'
                         mode='outlined'
                         theme={{colors:{primary: "blue"}}}
                         style={styles.smallTextInput} />

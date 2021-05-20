@@ -15,7 +15,6 @@ const PatientFilter = () => {
         },
         searchBar: {
             backgroundColor: 'blue',
-            marginTop: 20,
         }
     })
 
