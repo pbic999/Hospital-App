@@ -1,38 +1,34 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import PatientEntryForm from './screens/PatientEntryForm';
-import PatientFilter from './screens/PatientFilter';
+import PatientEntryForm from './Screens/PatientEntryForm.js';
+import PatientFilter from './Screens/PatientFilter.js';
 import SignIn from './Screens/SignIn';
-import UserEntryForm from './screens/UserEntryForm';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import PatientDetails from './Screens/PatientDetails.jsx';
+import AddDocotr from './Screens/AddDocotr.js';
+import AddNurse from './Screens/AddNurse.jsx';
+import AddHospital from './Screens/AddHospital.jsx';
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    <>
         <NavigationContainer>
             <Drawer.Navigator 
               initialRouteName="Filter"
               drawerContentOptions={{
-              activeTintColor: 'blue',
+              activeTintColor: '#0481eb',
               itemStyle: { marginVertical: 5 },
             }}>
               <Drawer.Screen name="Filter" component={PatientFilter} />
-              <Drawer.Screen name="UserForm" component={UserEntryForm} />
+              <Drawer.Screen name="Add doctor" component={AddDocotr} />
+              <Drawer.Screen name="Add Nurse" component={AddNurse} />
               <Drawer.Screen name="PatientEntryForm" component={PatientEntryForm} />
+              <Drawer.Screen name="PatientDetails" component={PatientDetails} />
+              <Drawer.Screen name="SignIn" component={SignIn} />
+              <Drawer.Screen name="Add hospital" component={AddHospital} />
             </Drawer.Navigator>
-        </NavigationContainer>
-    </>
+          </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    width:"100%",
-    height:"100%",
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

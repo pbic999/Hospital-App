@@ -2,9 +2,9 @@ import { useState } from "react"
 import { StyleSheet, Image, TextInput, Text, View, Keyboard } from "react-native";
 import React from 'react'
 
-const SignIn = () => {
-    const [email,setEmail] = useState();
-    const [password,setPassword] = useState();
+const AddHospital = () => {
+    const [adminNo,setAdminNo] = useState();
+    const [adminPassword,setAdminPassword] = useState();
     const [hospitalId,setHospitalId] = useState()
     const [loading,setLoading] = useState(false);
     const [user,setUser] = useState();
@@ -20,12 +20,11 @@ const SignIn = () => {
             <TextInput onChangeText={val => setHospitalId(val)} 
                 style={styles.input} placeholder='Hospital ID' />
                 <TextInput onChangeText={val => setEmail(val)} 
-                style={styles.input} placeholder='Email' />
+                style={styles.input} placeholder='Admin Mobile no.' />
                 <TextInput onChangeText={val => setPassword(val)}
                 secureTextEntry = {true}
-                style={styles.input} placeholder='Password' />
-                <Text onPress={submitHandler} style={styles.login}> Login </Text>
-                <Text style={styles.forget_password}> Forget password? </Text>
+                style={styles.input} placeholder='Admin password' />
+                <Text onPress={submitHandler} style={styles.login}> Add Hospital </Text>
             </View>
         </View>
     )
@@ -76,4 +75,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default SignIn
+export default AddHospital
