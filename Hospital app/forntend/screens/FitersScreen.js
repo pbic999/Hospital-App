@@ -3,29 +3,103 @@ import { View, Text, ScrollView, StyleSheet, Button, Modal } from 'react-native'
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import { Picker } from 'react-native-picker-dropdown';
 import DatePicker from 'react-native-datepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 const FiltersScreen = (props) => {
 
     const [showModal, setShowModal] = props.modalState;
 
-    //Item array for the dropdown
-    const items = [
+    //Item array for the doctor dropdown
+    const doctorItems = [
         //name key is must.It is to show the text in front
-        { id: 1, name: 'less' },
-        { id: 2, name: 'codepen' },
-        { id: 3, name: 'envelope' },
-        { id: 4, name: 'etsy' },
-        { id: 5, name: 'facebook' },
-        { id: 6, name: 'foursquare' },
-        { id: 7, name: 'github-alt' },
-        { id: 8, name: 'github' },
-        { id: 9, name: 'gitlab' },
-        { id: 10, name: 'instagram' },
+        { id: 1, name: 'Arun' },
+        { id: 2, name: 'Amit' },
+        { id: 3, name: 'Venkat' },
     ];
 
-    const [spo2, setSpo2] = useState('');
+    //Item array for the ward dropdown
+    const wardItems = [
+        //name key is must.It is to show the text in front
+        { id: 1, name: 'I-GS1' },
+        { id: 2, name: 'I-GS2' },
+        { id: 3, name: 'I-GS3' },
+    ];
 
+    //Item array for the O2 NIV MV ITEMS dropdown
+    const o2NivMvItems = [
+        //name key is must.It is to show the text in front
+        { id: 1, name: 'RA' },
+        { id: 2, name: '5L O2' },
+        { id: 3, name: '6L O2' },
+    ];
+
+     //Item array for the CO-MORBID dropdown
+     const coMorBidItems = [
+        //name key is must.It is to show the text in front
+        { id: 1, name: 'HTN' },
+        { id: 2, name: 'DM' },
+        { id: 3, name: 'CAD' },
+    ];
+
+
+    //  Data for bpSys dropdown
+    const [bpSys, setBpSys] = useState('');
+    const bpSysList = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
+    const handleBpSysFilter = (bpSys) => {
+        setBpSys(bpSys);
+        console.log("bpSys filter set to : " + bpSys);
+    }
+
+    //  Data for bpDia dropdown
+    const [bpDia, setBpDia] = useState('');
+    const bpDiaList = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
+    const handleBpDiaFilter = (bpDia) => {
+        setBpDia(bpDia);
+        console.log("bpDia filter set to : " + bpDia);
+    }
+
+    //  Data for spo2 dropdown
+    const [spo2, setSpo2] = useState('');
     const spo2List = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
+    const handleSpo2Filter = (spo2) => {
+        setSpo2(spo2);
+        console.log("spo2 filter set to : " + spo2);
+    }
+
+    //  Data for pr dropdown
+    const [pr, setPr] = useState('');
+    const prList = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
+    const handlePrFilter = (pr) => {
+        setpr(pr);
+        console.log("pr filter set to : " + pr);
+    }
+
+    //  Data for rr dropdown
+    const [rr, setRr] = useState('');
+    const rrList = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
+    const handleRrFilter = (rr) => {
+        setrr(rr);
+        console.log("rr filter set to : " + rr);
+    }
+
+    // DOA
+    //https://github.com/react-native-datetimepicker/datetimepicker
+    const [date, setDate] = useState(new Date(1621597631000));
+    const [show, setShow] = useState(false);
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        console.log(currentDate);
+        setShow(false);
+        setDate(currentDate);
+    };
+
+    const showDatepicker = () => {
+        setShow(true);
+    }
+
+
+
 
     const styles = StyleSheet.create({
         modal: {
@@ -92,14 +166,6 @@ const FiltersScreen = (props) => {
         
     });
 
-    const handleSpo2Filter = (spo2) => {
-        setSpo2(spo2);
-        console.log("spo2 filter set to : " + spo2);
-    }
-
-    // DOA
-    const [date, setDate] = useState('09-10-2020');
-
     return(
 
         <Modal
@@ -111,7 +177,7 @@ const FiltersScreen = (props) => {
         }}>
             {/*All views of Modal*/}
             {/*Animation can be slide, slide, none*/}
-            <View style={styles.modal}>
+            <ScrollView style={styles.modal}>
                 <Text style={styles.titleText}>
                     Filters :
                 </Text>
@@ -129,7 +195,7 @@ const FiltersScreen = (props) => {
                     itemStyle={styles.itemStyle}
                     itemTextStyle={styles.itemTextStyle}
                     itemsContainerStyle={styles.itemsContainerStyle}
-                    items={items}
+                    items={doctorItems}
                     //mapping of item array
                     defaultIndex={2}
                     //default selected item index
@@ -154,7 +220,7 @@ const FiltersScreen = (props) => {
                     itemStyle={styles.itemStyle}
                     itemTextStyle={styles.itemTextStyle}
                     itemsContainerStyle={styles.itemsContainerStyle}
-                    items={items}
+                    items={wardItems}
                     //mapping of item array
                     defaultIndex={2}
                     //default selected item index
@@ -171,11 +237,11 @@ const FiltersScreen = (props) => {
                             BP (systolic)
                         </Text>
                         <Picker
-                            selectedValue={spo2}
+                            selectedValue={bpSys}
                             style={{ height: 50, width: 150, backgroundColor: "#0481eb", borderWidth: 1, borderRadius: 5 }}
-                            onValueChange={(itemValue, itemIndex) => handleSpo2Filter(itemValue)}>
+                            onValueChange={(itemValue, itemIndex) => handleBpSysFilter(itemValue)}>
                             <Picker.Item label="Doctor" value={null} />
-                            {spo2List.map((x, index) => {
+                            {bpSysList.map((x, index) => {
                             return <Picker.Item key={index} label={x} value={x} />})}
                         </Picker>
                     </View>
@@ -184,29 +250,36 @@ const FiltersScreen = (props) => {
                             BP (diastolic)
                         </Text>
                         <Picker
-                            selectedValue={spo2}
+                            selectedValue={bpDia}
                             style={{ height: 50, width: 150, backgroundColor: "#0481eb", borderWidth: 1, borderRadius: 5 }}
-                            onValueChange={(itemValue, itemIndex) => handleSpo2Filter(itemValue)}>
+                            onValueChange={(itemValue, itemIndex) => handleBpDiaFilter(itemValue)}>
                             <Picker.Item label="Doctor" value={null} />
-                            {spo2List.map((x, index) => {
+                            {bpDiaList.map((x, index) => {
                             return <Picker.Item key={index} label={x} value={x} />})}
                         </Picker>
                     </View>
                 
                 </View>
                 <View style={{'flexDirection': 'row', 'justifyContent':'space-around'}}>
-                    <View>
+                    <View style={{width: 150, height: 50}}>
                         <Text style={styles.subHeadingText}>
-                            O2 NIV MV
+                            DOA
                         </Text>
-                        <Picker
-                            selectedValue={spo2}
-                            style={{ height: 50, width: 150, backgroundColor: "#0481eb", borderWidth: 1, borderRadius: 5 }}
-                            onValueChange={(itemValue, itemIndex) => handleSpo2Filter(itemValue)}>
-                            <Picker.Item label="Doctor" value={null} />
-                            {spo2List.map((x, index) => {
-                            return <Picker.Item key={index} label={x} value={x} />})}
-                        </Picker>
+                        <View>
+                            <Button 
+                                onPress={showDatepicker}
+                                title="start date" 
+                                color="#0481eb"    
+                            />
+                        </View>
+                        {show &&
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={date}
+                            mode={'date'}
+                            display="default"
+                            onChange={onChange}
+                        />}
                     </View>
                     <View>
                         <Text style={styles.subHeadingText}>
@@ -228,11 +301,11 @@ const FiltersScreen = (props) => {
                             PR
                         </Text>
                         <Picker
-                            selectedValue={spo2}
+                            selectedValue={pr}
                             style={{ height: 50, width: 150, backgroundColor: "#0481eb", borderWidth: 1, borderRadius: 5 }}
-                            onValueChange={(itemValue, itemIndex) => handleSpo2Filter(itemValue)}>
+                            onValueChange={(itemValue, itemIndex) => handlePrFilter(itemValue)}>
                             <Picker.Item label="Doctor" value={null} />
-                            {spo2List.map((x, index) => {
+                            {prList.map((x, index) => {
                             return <Picker.Item key={index} label={x} value={x} />})}
                         </Picker>
                     </View>
@@ -241,46 +314,49 @@ const FiltersScreen = (props) => {
                             RR
                         </Text>
                         <Picker
-                            selectedValue={spo2}
+                            selectedValue={rr}
                             style={{ height: 50, width: 150, backgroundColor: "#0481eb", borderWidth: 1, borderRadius: 5 }}
-                            onValueChange={(itemValue, itemIndex) => handleSpo2Filter(itemValue)}>
+                            onValueChange={(itemValue, itemIndex) => handleRrFilter(itemValue)}>
                             <Picker.Item label="Doctor" value={null} />
-                            {spo2List.map((x, index) => {
+                            {rrList.map((x, index) => {
                             return <Picker.Item key={index} label={x} value={x} />})}
                         </Picker>
                     </View>                
                 </View>
-                <View>
-                    <Text style={styles.subHeadingText}>
-                        DOA
-                    </Text>
-                    <DatePicker
-                        style={styles.datePickerStyle}
-                        date={date} // Initial date from state
-                        mode="date" // The enum of date, datetime and time
-                        placeholder="select date"
-                        format="DD-MM-YYYY"
-                        minDate="01-01-2016"
-                        maxDate="01-01-2040"
-                        confirmBtnText="Confirm"
-                        cancelBtnText="Cancel"
-                        customStyles={{
-                            dateIcon: {
-                            //display: 'none',
-                            position: 'absolute',
-                            left: 0,
-                            top: 4,
-                            marginLeft: 0,
-                            },
-                            dateInput: {
-                            marginLeft: 36,
-                            },
-                        }}
-                        onDateChange={(date) => {
-                            setDate(date);
-                        }}
-                    />
 
+                <View>
+                    {/*  O2 NIV MV */}
+                    <Text style={styles.headingText}>
+                        O2 NIV MV
+                    </Text>
+
+                    <SearchableDropdown
+                        onTextChange={(text) => console.log(text)}
+                        //On text change listner on the searchable input
+                        onItemSelect={(item) => alert(JSON.stringify(item))}
+                        //onItemSelect called after the selection from the dropdown
+                        containerStyle={styles.containerStyle}
+                        //suggestion container style
+                        textInputStyle={styles.textInputStyle}
+                        itemStyle={styles.itemStyle}
+                        itemTextStyle={styles.itemTextStyle}
+                        itemsContainerStyle={styles.itemsContainerStyle}
+                        items={o2NivMvItems}
+                        //mapping of item array
+                        defaultIndex={2}
+                        //default selected item index
+                        placeholder="O2 NIV MV"
+                        //place holder for the search input
+                        resetValue={false}
+                        //reset textInput Value with true and false state
+                        underlineColorAndroid="transparent"
+                        //To remove the underline from the android input
+                    />
+                </View>
+
+                    
+
+                <View>
                     {/* CO-MORBID Fresh Compliments */}
                     <Text style={styles.headingText}>
                         CO-MORBID
@@ -297,7 +373,7 @@ const FiltersScreen = (props) => {
                         itemStyle={styles.itemStyle}
                         itemTextStyle={styles.itemTextStyle}
                         itemsContainerStyle={styles.itemsContainerStyle}
-                        items={items}
+                        items={coMorBidItems}
                         //mapping of item array
                         defaultIndex={2}
                         //default selected item index
@@ -319,7 +395,7 @@ const FiltersScreen = (props) => {
                     />
                 </View>
 
-            </View>
+            </ScrollView>
         </Modal>
     
     );
