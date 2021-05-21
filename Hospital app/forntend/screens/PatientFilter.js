@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import FiltersScrollbar from './FitersScrollbar';
-import PatientListScreen from './PatientListScreen'
+import PatientListScreen from './PatientListScreen';
+import FiltersScreen from './FitersScreen';
+
 
 const PatientFilter = () => {
 
@@ -15,9 +17,12 @@ const PatientFilter = () => {
             padding: 0
         },
         searchBar: {
+            paddingTop: 20,
             backgroundColor: '#0481eb',
         }
-    })
+    });
+
+    const [showModal, setShowModal] = useState(false);
 
     return(
         <View style={styles.filterContainer}>
@@ -29,8 +34,9 @@ const PatientFilter = () => {
                 inputContainerStyle={{backgroundColor: '#fff'}}
                 inputStyle={{color: '#0481eb'}}
             />
+            <FiltersScreen modalState={[showModal, setShowModal]} />
             <View style={{padding: 10}}>
-                <FiltersScrollbar />
+                <FiltersScrollbar modalState={[showModal, setShowModal]} />
             </View>
             <PatientListScreen />
         </View>

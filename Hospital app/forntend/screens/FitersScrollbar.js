@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+import { View, ScrollView, StyleSheet, Button } from 'react-native';
 import DoctorFilterPage from './FiterPages/DoctorFilterPage';
 import WardFilterPage from './FiterPages/WardFilterPage'
 
-const FiltersScrollbar = () => {
+const FiltersScrollbar = (props) => {
+
+    const [showModal, setShowModal] = props.modalState;
     
     const styles = StyleSheet.create({
         scrollbar: {
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
         }
     });
+
+    const viewFilters = () => {
+        setShowModal(!showModal);
+    }
     
     return(
         <>
             <View style={styles.scrollbar}>
-                <View>
-                   <DoctorFilterPage />
-                </View>
-                <View>
-                    <WardFilterPage />
-                </View>
+                <Button
+                    title="filters"
+                    onPress={() => viewFilters()}
+                />
             </View>
         </>
     );

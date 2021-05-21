@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from 'react';
 import { StyleSheet, TextInput , Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
-import { Button } from 'react-native-paper';
 
 const PatientDetails = () => {
     const [patientDetails,setPatientDetails] = useState({})

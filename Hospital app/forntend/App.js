@@ -1,18 +1,21 @@
 import React from 'react';
-import PatientEntryForm from './Screens/PatientEntryForm.js';
-import PatientFilter from './Screens/PatientFilter.js';
+import PatientEntryForm from './screens/PatientEntryForm.js';
+import PatientFilter from './screens/PatientFilter.js';
 import SignIn from './Screens/SignIn';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 import PatientDetails from './Screens/PatientDetails.jsx';
 import AddDocotr from './Screens/AddDocotr.js';
 import AddNurse from './Screens/AddNurse.jsx';
 import AddHospital from './Screens/AddHospital.jsx';
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
+      <>
         <NavigationContainer>
             <Drawer.Navigator 
               initialRouteName="Filter"
@@ -29,6 +32,7 @@ export default function App() {
               <Drawer.Screen name="Add hospital" component={AddHospital} />
             </Drawer.Navigator>
           </NavigationContainer>
+        </>
   );
 }
 
