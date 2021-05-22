@@ -20,7 +20,7 @@ const FiltersScreen = (props) => {
     const filterByDutyDoctor = async (selectedDoctor) => {
         console.log(selectedDoctor);
         setLoading(true);
-        await axios.get('http://192.168.0.106:5000/patient/duty_doctor/',{
+        await axios.get('http://192.168.0.106:5000/patient/duty_doctor/', {
             selectedDoctor
         }).then((res)=> console.log(res.data));
         setLoading(false);

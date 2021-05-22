@@ -6,8 +6,56 @@ import axios from "axios";
 const SignIn = () => {
     const [mobile_no,setMobile_no] = useState();
     const [password,setPassword] = useState();
-    const [loading,setLoading] = useState(false);
-    const [user,setUser] = useState();
+
+    const verfiyMobileNumber = () => {
+        var phoneno = /^\d{10}$/;
+
+        if (mobile_no.match(phoneno)) {
+            if (mobile_no[0] > '5') {
+                return true
+            }
+        } else {
+            alert("invalid mobile number!");
+            return false
+        }
+    }
+
+    const verfiyPassword = () => {
+        var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,20}$/;
+
+        if (password.match(passw)) {
+            return true;
+        } else {
+            alert("password must contain a digit, a upper case character and lower case character!");
+            return false;
+        }
+    }
+
+    const checkTextInput = () => {
+        //Check for the Mobile TextInput
+        if (!mobile_no.trim()) {
+          alert('Please Enter Mobile no.');
+          return false;
+        }
+        if (!verfiyMobileNumber()) {
+            return false;
+        }
+        //Check for the Gender TextInput
+        if (!gender.trim()) {
+            alert('Please Enter gender');
+            return false;
+        }
+        if (!password.trim()) {
+            alert('Please Enter password');
+            return false;
+        }
+        if (!verfiyPassword()) {
+            return false;
+        }
+        //Checked Successfully
+        //Do whatever you want
+        return true;
+    };
 
     const submitHandler = (e) => {
         axios.post('http://192.168.0.106:5000/user/signin',{mobile_no,password})

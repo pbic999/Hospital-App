@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { View, ScrollView, StyleSheet, Button } from 'react-native';
-import DoctorFilterPage from './FiterPages/DoctorFilterPage';
-import WardFilterPage from './FiterPages/WardFilterPage'
 
 const FiltersScrollbar = (props) => {
 
