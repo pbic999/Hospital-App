@@ -22,7 +22,8 @@ const PatientFilter = () => {
     const [showModal, setShowModal] = useState(false);
 
     // patientListData
-    const [patientList,setPatientList] = useState([])
+    const [patientList,setPatientList] = useState([]);
+    const [loading, setLoading] = useState(true);
 
 
     // filtering with UHID or Name
@@ -82,7 +83,7 @@ const PatientFilter = () => {
             <View style={{padding: 10}}>
                 <FiltersScrollbar modalState={[showModal, setShowModal]}  filterStates = {filterStates}  />
             </View>
-            <PatientListScreen patientList={patientList} />
+            <PatientListScreen patientList={patientList} loadingState={[loading]} />
         </View>
     );
 
