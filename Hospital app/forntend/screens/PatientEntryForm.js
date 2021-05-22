@@ -23,27 +23,27 @@ const PatientEntryForm = () => {
     const [dutyDoctors,setDutyDoctors] = useState();
 
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const duty_doctor = dutyDoctors.split(',')
         const complaints = freshComplaints.split(',')
-        axios.post('http://192.168.0.106:5000/patient/add',{
-            patient_name,
-            s_no,
-            ward_name,
-            UHID,
-            hospital_no,
-            doa,
-            age,
-            sex,
-            pr,
-            bp,
-            rr,
-            spo2,
-            o2_niv_mv,
-            o2_niv_mv_level,
-            complaints,
-            duty_doctor
-        }).then((res)=> console.log(res.data))
+        await axios.post('http://192.168.0.106:5000/patient/add',{
+                patient_name,
+                s_no,
+                ward_name,
+                UHID,
+                hospital_no,
+                doa,
+                age,
+                sex,
+                pr,
+                bp,
+                rr,
+                spo2,
+                o2_niv_mv,
+                o2_niv_mv_level,
+                complaints,
+                duty_doctor
+            }).then((res)=> console.log(res.data));
      
     }
 

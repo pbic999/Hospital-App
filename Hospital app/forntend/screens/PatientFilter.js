@@ -81,7 +81,7 @@ const PatientFilter = () => {
             />
             <FiltersScreen modalState={[showModal, setShowModal]} filterStates = {filterStates} patientListState={[patientList, setPatientList]} />
             <View style={{padding: 10}}>
-                <FiltersScrollbar modalState={[showModal, setShowModal]}  filterStates = {filterStates}  />
+                <FiltersScrollbar modalState={[showModal, setShowModal]}  filterStates = {filterStates} loadingState={[loading]} />
             </View>
             <PatientListScreen patientList={patientList} loadingState={[loading]} />
         </View>
