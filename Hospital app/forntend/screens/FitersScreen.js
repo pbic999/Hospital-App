@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Button, Modal } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Button, Modal, KeyboardAvoidingView } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import { Picker } from 'react-native-picker-dropdown';
 import DatePicker from 'react-native-datepicker';
@@ -71,7 +71,7 @@ const FiltersScreen = (props) => {
     const [pr, setPr] = useState('');
     const prList = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
     const handlePrFilter = (pr) => {
-        setpr(pr);
+        setPr(pr);
         console.log("pr filter set to : " + pr);
     }
 
@@ -79,7 +79,7 @@ const FiltersScreen = (props) => {
     const [rr, setRr] = useState('');
     const rrList = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
     const handleRrFilter = (rr) => {
-        setrr(rr);
+        setRr(rr);
         console.log("rr filter set to : " + rr);
     }
 
@@ -167,7 +167,6 @@ const FiltersScreen = (props) => {
     });
 
     return(
-
         <Modal
             animationType={'slide'}
             transparent={false}
@@ -175,9 +174,10 @@ const FiltersScreen = (props) => {
             onRequestClose={() => {
                 console.log('Modal has been closed.');
         }}>
+            <ScrollView>
             {/*All views of Modal*/}
             {/*Animation can be slide, slide, none*/}
-            <ScrollView style={styles.modal}>
+            <View style={styles.modal}>
                 <Text style={styles.titleText}>
                     Filters :
                 </Text>
@@ -205,6 +205,8 @@ const FiltersScreen = (props) => {
                     //reset textInput Value with true and false state
                     underlineColorAndroid="transparent"
                     //To remove the underline from the android input
+                    listProps={{ nestedScrollEnabled: true }}
+                    //disabling the scrolling part in COMORBID
                 />
                 <Text style={styles.headingText}>
                     Ward Name
@@ -230,6 +232,8 @@ const FiltersScreen = (props) => {
                     //reset textInput Value with true and false state
                     underlineColorAndroid="transparent"
                     //To remove the underline from the android input
+                    listProps={{ nestedScrollEnabled: true}}
+                     //disabling the scrolling part in COMORBID
                 />
                 <View style={{'flexDirection': 'row', 'justifyContent':'space-around'}}>
                     <View>
@@ -351,10 +355,10 @@ const FiltersScreen = (props) => {
                         //reset textInput Value with true and false state
                         underlineColorAndroid="transparent"
                         //To remove the underline from the android input
+                        listProps={{ nestedScrollEnabled: true }}
+                        //disabling the scrolling part in COMORBID
                     />
                 </View>
-
-                    
 
                 <View>
                     {/* CO-MORBID Fresh Compliments */}
@@ -379,10 +383,12 @@ const FiltersScreen = (props) => {
                         //default selected item index
                         placeholder="CO-MORBID"
                         //place holder for the search input
-                        resetValue={false}
+                        resetValue={true}
                         //reset textInput Value with true and false state
                         underlineColorAndroid="transparent"
                         //To remove the underline from the android input
+                        listProps={{ nestedScrollEnabled: true }}
+                        //disabling the scrolling part in COMORBID
                     />
                 </View>
 
@@ -395,6 +401,7 @@ const FiltersScreen = (props) => {
                     />
                 </View>
 
+            </View>
             </ScrollView>
         </Modal>
     

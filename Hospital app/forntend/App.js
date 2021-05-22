@@ -9,6 +9,7 @@ import PatientDetails from './Screens/PatientDetails.jsx';
 import AddDocotr from './Screens/AddDocotr.js';
 import AddNurse from './Screens/AddNurse.jsx';
 import AddHospital from './Screens/AddHospital.jsx';
+import WardsStatusScreen from './screens/WardsStatusScreen';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -30,6 +31,7 @@ export default function App() {
               <Drawer.Screen name="PatientDetails" component={PatientDetails} />
               <Drawer.Screen name="SignIn" component={SignIn} />
               <Drawer.Screen name="Add hospital" component={AddHospital} />
+              <Drawer.Screen name="Wards Status" component={WardsStatusScreen} />
             </Drawer.Navigator>
           </NavigationContainer>
         </>
