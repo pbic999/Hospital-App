@@ -21,6 +21,9 @@ const PatientFilter = () => {
 
     const [showModal, setShowModal] = useState(false);
 
+    // patientListData
+    const [patientList,setPatientList] = useState([])
+
 
     // filtering with UHID or Name
     const [serach, setSearch] = useState('');
@@ -75,11 +78,11 @@ const PatientFilter = () => {
                 inputContainerStyle={{backgroundColor: '#fff'}}
                 inputStyle={{color: '#0481eb'}}
             />
-            <FiltersScreen modalState={[showModal, setShowModal]} filterStates = {filterStates} />
+            <FiltersScreen modalState={[showModal, setShowModal]} filterStates = {filterStates} patientListState={[patientList, setPatientList]} />
             <View style={{padding: 10}}>
                 <FiltersScrollbar modalState={[showModal, setShowModal]}  filterStates = {filterStates}  />
             </View>
-            <PatientListScreen />
+            <PatientListScreen patientList={patientList} />
         </View>
     );
 

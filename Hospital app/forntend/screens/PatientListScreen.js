@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { List } from 'react-native-paper';
 
-const PatientListScreen = () => {
+const PatientListScreen = (props) => {
 
-    const [patientList,setPatientList] = useState([])
 
-    useEffect(() => {
-        setPatientList(['patient1','patient2','patient3'])
-    },[])
 
     const viewPatient = (x) => {
         console.log(x);
@@ -16,7 +12,7 @@ const PatientListScreen = () => {
 
     return(
         <ScrollView>
-            {patientList.map((x,index) => {
+            {props.patientList.map((x,index) => {
                 return <List.Item
                 title={x}
                 key={index}
