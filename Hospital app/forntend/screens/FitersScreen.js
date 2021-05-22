@@ -149,6 +149,10 @@ const FiltersScreen = (props) => {
         setShowModal(!showModal);
     }
 
+    const handleBpFilter = (bpSys, bpDia) => {
+        filterByBp(bpSys, bpDia);
+    }
+
     //  Data for spo2 dropdown
     const [spo2, setSpo2] = props.filterStates[6];
     const spo2List = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
@@ -345,12 +349,18 @@ const FiltersScreen = (props) => {
                      //disabling the scrolling part in COMORBID
                 />
                 <View style={{'flexDirection': 'row', 'justifyContent':'space-around'}}>
-                        <TextInput style={styles.input}
+                        <TextInput 
+                           style={styles.input}
+                           value={bpSys}
                            placeholder ='BP (systolic)'
+                           onChange={() => handleBpSysFilter(bpSys)}
                         />
-                        <Text> / </Text>
-                        <TextInput style={styles.input}
+                        <Text style={{fontSize: 30, fontWeight: 'bold'}}> / </Text>
+                        <TextInput
+                            value={bpDia} 
+                           style={styles.input}
                            placeholder= 'BP (diastolic)'
+                           onChange={() => handleBpDiaFilter(bpDia)}
                         />
                 </View>
                 <View style={{'flexDirection': 'row', 'justifyContent':'space-around'}}>
@@ -482,6 +492,7 @@ const FiltersScreen = (props) => {
                     <Button                    
                         title="Apply Filters"
                         onPress={() => {
+                            handleBpFilter(bpSys, bpDia);
                             setShowModal(!showModal);
                         }}
                     />
