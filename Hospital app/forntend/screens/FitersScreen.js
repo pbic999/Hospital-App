@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, Button, Modal, TextInput, SafeAreaView } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import { Picker } from 'react-native-picker-dropdown';
@@ -9,6 +9,12 @@ import axios from 'axios';
 
 
 const FiltersScreen = (props) => {
+
+    const [patientList,setPatientList] = props.patientListState;
+
+    useEffect(() => {
+        setPatientList(['patient1','patient2','patient3'])
+    },[]);
 
     const filterByDutyDoctor = (selectedDoctor) => {
         console.log(selectedDoctor);
