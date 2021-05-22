@@ -1,6 +1,6 @@
 import React from 'react';
-import PatientEntryForm from './screens/PatientEntryForm.js';
-import PatientFilter from './screens/PatientFilter.js';
+import PatientEntryForm from './Screens/PatientEntryForm.js';
+import PatientFilter from './Screens/PatientFilter.js';
 import SignIn from './Screens/SignIn';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -9,7 +9,7 @@ import PatientDetails from './Screens/PatientDetails.jsx';
 import AddDocotr from './Screens/AddDocotr.js';
 import AddNurse from './Screens/AddNurse.jsx';
 import AddHospital from './Screens/AddHospital.jsx';
-import WardsStatusScreen from './screens/WardsStatusScreen';
+import WardsStatusScreen from './Screens/WardsStatusScreen';
 
 const Drawer = createDrawerNavigator();
 

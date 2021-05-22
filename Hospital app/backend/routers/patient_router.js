@@ -105,13 +105,9 @@ patientRouter.get('/DM/:hospital_id', async (req,res) => {
     }
 })
 
-<<<<<<< HEAD
 
 //correct
 patientRouter.get('/doa/:doa/:hospital_id', async (req,res) => {
-=======
-patientRouter.get('/doa/:date/:hospital_id', async (req,res) => {
->>>>>>> 72d4b0a142570c2ab51832790378cec72445a398
     try {
         const doa = req.params.date
         const hospital_id = req.params.hospital_id
