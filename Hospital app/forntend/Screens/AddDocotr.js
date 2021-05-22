@@ -1,11 +1,15 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { StyleSheet,TextInput, Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
 
 const AddDocotr = () => {
 
-    const [userName, setUserName] = useState('');
-    const [mobileNumber, setMobileNumber] = useState('');
-    const [password, setPassword] = useState('');
+    const [name,setName] = useState()
+    const [mobile_no,setMobile_no] = useState();
+    const [gender,setGender] = useState();
+    const [designation,setDesignation] = useState()
+    const [qualification,setQualification] = useState()
+    const [password,setPassword] = useState()
 
     const styles = StyleSheet.create({
         title: {
@@ -40,6 +44,19 @@ const AddDocotr = () => {
           }
     });
 
+    const submitHandler = () => {
+        axios.post('http://192.168.0.106:5000/user/add',{
+            name,
+            mobile_no,
+            gender,
+            designation,
+            qualification,
+            password,
+            role: 'doctor'
+        }).then((res) => console.log(res.data))
+        .catch((err) => console.log('user already exist'))
+    }
+
     return (
         <View style={styles.container}>
                     <StatusBar backgroundColor="#0481eb" />
@@ -47,52 +64,44 @@ const AddDocotr = () => {
                     <KeyboardAvoidingView>
                     <Text style={styles.title}>Enter new doctor information :</Text>
                     <TextInput 
-                        placeholder='ID'
+                        placeholder='Name'
                         mode='outlined'
-                        value={userName}
+                        value={name}
                         theme={{colors:{primary: "#0481eb"}}}
                         style={styles.textInput}
-                        onChangeText={(text)=>setUserName(text)}
-                    />
-                    <TextInput 
-                        placeholder='Doctor name'
-                        mode='outlined'
-                        value={mobileNumber}
-                        theme={{colors:{primary: "#0481eb"}}}
-                        style={styles.textInput}
-                        onChangeText={(text)=>setMobileNumber(text)}
-                    />
-                    <TextInput 
-                        placeholder='Gender'
-                        mode='outlined'
-                        value={password}
-                        theme={{colors:{primary: "#0481eb"}}}
-                        style={styles.textInput}
-                        onChangeText={(text)=>setPassword(text)}
-                    />
-                    <TextInput 
-                        placeholder='Designation'
-                        mode='outlined'
-                        value={password}
-                        theme={{colors:{primary: "#0481eb"}}}
-                        style={styles.textInput}
-                        onChangeText={(text)=>setPassword(text)}
-                    />
-                    <TextInput 
-                        placeholder='Qualification'
-                        mode='outlined'
-                        value={password}
-                        theme={{colors:{primary: "#0481eb"}}}
-                        style={styles.textInput}
-                        onChangeText={(text)=>setPassword(text)}
+                        onChangeText={(text)=>setName(text)}
                     />
                     <TextInput 
                         placeholder='Mobile no.'
                         mode='outlined'
-                        value={password}
+                        value={mobile_no}
                         theme={{colors:{primary: "#0481eb"}}}
                         style={styles.textInput}
-                        onChangeText={(text)=>setPassword(text)}
+                        onChangeText={(text)=>setMobile_no(text)}
+                    />
+                    <TextInput 
+                        placeholder='Gender'
+                        mode='outlined'
+                        value={gender}
+                        theme={{colors:{primary: "#0481eb"}}}
+                        style={styles.textInput}
+                        onChangeText={(text)=>setGender(text)}
+                    />
+                    <TextInput 
+                        placeholder='Designation'
+                        mode='outlined'
+                        value={designation}
+                        theme={{colors:{primary: "#0481eb"}}}
+                        style={styles.textInput}
+                        onChangeText={(text)=>setDesignation(text)}
+                    />
+                    <TextInput 
+                        placeholder='Qualification'
+                        mode='outlined'
+                        value={qualification}
+                        theme={{colors:{primary: "#0481eb"}}}
+                        style={styles.textInput}
+                        onChangeText={(text)=>setQualification(text)}
                     />
                     <TextInput 
                         placeholder='Password'
@@ -101,9 +110,9 @@ const AddDocotr = () => {
                         value={password}
                         theme={{colors:{primary: "#0481eb"}}}
                         style={styles.textInput}
-                        onChangeText={(text)=>setPassword(text)}
+                        onChangeText={(text)=>setPassword(text)} 
                     />
-                <Text style={styles.submitButton}> Submit </Text>
+                <Text style={styles.submitButton} onPress={submitHandler}> Submit </Text>
                     </KeyboardAvoidingView>
                     </ScrollView>
         </View>

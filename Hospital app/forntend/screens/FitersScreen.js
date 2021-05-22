@@ -1,9 +1,10 @@
 import React, { Component, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Button, Modal } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Button, Modal, TextInput } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import { Picker } from 'react-native-picker-dropdown';
 import DatePicker from 'react-native-datepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 const FiltersScreen = (props) => {
@@ -77,7 +78,7 @@ const FiltersScreen = (props) => {
 
     //  Data for rr dropdown
     const [rr, setRr] = useState('');
-    const rrList = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
+    const rrList = ['<70%', '70-79 %', '80-89%', '90-99 %'];
     const handleRrFilter = (rr) => {
         setrr(rr);
         console.log("rr filter set to : " + rr);
@@ -138,7 +139,9 @@ const FiltersScreen = (props) => {
             padding: 2,
         },
         subHeadingText: {
-            padding: 1,
+            fontSize: 20,
+            lineHeight: 30,
+            padding: 10,
         },
         titleText: {
             padding: 8,
@@ -147,12 +150,6 @@ const FiltersScreen = (props) => {
             fontWeight: 'bold',
         },
         // date-picker styles
-        container: {
-            flex: 1,
-            padding: 10,
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
         title: {
             textAlign: 'center',
             fontSize: 20,
@@ -163,6 +160,22 @@ const FiltersScreen = (props) => {
             width: 150,
             marginTop: 10,
         },
+        input: {
+            marginBottom: 25,
+            borderWidth: 1,
+            borderColor: '#a2a2a2',
+            fontSize: 20,
+            lineHeight: 30,
+            padding: 10,
+            flex: 1
+        },
+        container: {
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center'
+    
+        }
         
     });
 
@@ -175,8 +188,9 @@ const FiltersScreen = (props) => {
             onRequestClose={() => {
                 console.log('Modal has been closed.');
         }}>
-            {/*All views of Modal*/}
+            {/*All views of Modal*/} 
             {/*Animation can be slide, slide, none*/}
+            <View style={styles.container}>
             <ScrollView style={styles.modal}>
                 <Text style={styles.titleText}>
                     Filters :
@@ -232,33 +246,13 @@ const FiltersScreen = (props) => {
                     //To remove the underline from the android input
                 />
                 <View style={{'flexDirection': 'row', 'justifyContent':'space-around'}}>
-                    <View>
-                        <Text style={styles.subHeadingText}>
-                            BP (systolic)
-                        </Text>
-                        <Picker
-                            selectedValue={bpSys}
-                            style={{ height: 50, width: 150, backgroundColor: "#0481eb", borderWidth: 1, borderRadius: 5 }}
-                            onValueChange={(itemValue, itemIndex) => handleBpSysFilter(itemValue)}>
-                            <Picker.Item label="Doctor" value={null} />
-                            {bpSysList.map((x, index) => {
-                            return <Picker.Item key={index} label={x} value={x} />})}
-                        </Picker>
-                    </View>
-                    <View>
-                        <Text style={styles.subHeadingText}>
-                            BP (diastolic)
-                        </Text>
-                        <Picker
-                            selectedValue={bpDia}
-                            style={{ height: 50, width: 150, backgroundColor: "#0481eb", borderWidth: 1, borderRadius: 5 }}
-                            onValueChange={(itemValue, itemIndex) => handleBpDiaFilter(itemValue)}>
-                            <Picker.Item label="Doctor" value={null} />
-                            {bpDiaList.map((x, index) => {
-                            return <Picker.Item key={index} label={x} value={x} />})}
-                        </Picker>
-                    </View>
-                
+                        <TextInput style={styles.input}
+                           placeholder ='BP (systolic)'
+                        />
+                        <Text> / </Text>
+                        <TextInput style={styles.input}
+                           placeholder= 'BP (diastolic)'
+                        />
                 </View>
                 <View style={{'flexDirection': 'row', 'justifyContent':'space-around'}}>
                     <View style={{width: 150, height: 50}}>
@@ -266,11 +260,8 @@ const FiltersScreen = (props) => {
                             DOA
                         </Text>
                         <View>
-                            <Button 
-                                onPress={showDatepicker}
-                                title="start date" 
-                                color="#0481eb"    
-                            />
+                            <MaterialIcons onPress={showDatepicker}
+                             name="date-range" size={50} color="#0481eb" />
                         </View>
                         {show &&
                         <DateTimePicker
@@ -396,6 +387,7 @@ const FiltersScreen = (props) => {
                 </View>
 
             </ScrollView>
+            </View>
         </Modal>
     
     );

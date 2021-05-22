@@ -1,44 +1,25 @@
+import axios from 'axios';
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, TextInput, Text, View,
+     StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
 
 const AddNurse = () => {
 
-    const [userName, setUserName] = useState('');
-    const [mobileNumber, setMobileNumber] = useState('');
-    const [password, setPassword] = useState('');
+    const [name,setName] = useState()
+    const [mobile_no,setMobile_no] = useState();
+    const [gender,setGender] = useState();
+    const [password,setPassword] = useState()
 
-    const styles = StyleSheet.create({
-        title: {
-            fontSize: 23,
-            fontWeight: 'bold',
-        },
-        textInput: {
-            marginTop: 10,
-            borderWidth: 1,
-            borderColor: '#a2a2a2',
-            borderRadius: 5,
-            fontSize: 20,
-            lineHeight: 30,
-            padding: 10
-        },
-        submitButton: {
-            fontWeight: 'bold',
-            color: 'white',
-            backgroundColor: '#0481eb',
-            borderRadius: 3,
-            textAlign: 'center',
-            padding: 10,
-            fontSize: 20,
-            marginTop: 20
-        },
-        container: {
-            width:"100%",
-            height:"100%",
-            paddingLeft: 10,
-            paddingRight: 10,
-            paddingTop: 20
-          }
-    });
+    const submitHandler = () => {
+        axios.post('http://192.168.0.106:5000/user/add',{
+            name,
+            mobile_no,
+            gender,
+            password,
+            role: 'nurse'
+        }).then((res) => console.log(res.data))
+        .catch((err) => console.log('user already exist'))
+    }
 
     return (
         <View style={styles.container}>
@@ -47,32 +28,25 @@ const AddNurse = () => {
                     <KeyboardAvoidingView style={{height:'100%'}}>
                     <Text style={styles.title}>Enter new nurse information:</Text>
                     <TextInput 
-                        placeholder='ID'
-                        value={userName}
+                        placeholder='Name'
+                        value={name}
                         theme={{colors:{primary: "#0481eb"}}}
                         style={styles.textInput}
-                        onChangeText={(text)=>setUserName(text)}
+                        onChangeText={(text)=>setName(text)}
                     />
                     <TextInput 
-                        placeholder='Doctor name'
-                        value={mobileNumber}
+                        placeholder='Mobile no.'
+                        value={mobile_no}
                         theme={{colors:{primary: "#0481eb"}}}
                         style={styles.textInput}
-                        onChangeText={(text)=>setMobileNumber(text)}
+                        onChangeText={(text)=>setMobile_no(text)}
                     />
                     <TextInput 
                         placeholder='Gender'
-                        value={password}
+                        value={gender}
                         theme={{colors:{primary: "#0481eb"}}}
                         style={styles.textInput}
-                        onChangeText={(text)=>setPassword(text)}
-                    />
-                     <TextInput 
-                        placeholder='Mobile no.'
-                        value={password}
-                        theme={{colors:{primary: "#0481eb"}}}
-                        style={styles.textInput}
-                        onChangeText={(text)=>setPassword(text)}
+                        onChangeText={(text)=>setGender(text)}
                     />
                      <TextInput 
                         placeholder='Password'
@@ -82,11 +56,44 @@ const AddNurse = () => {
                         style={styles.textInput}
                         onChangeText={(text)=>setPassword(text)}
                     />
-                <Text style={styles.submitButton}> Submit </Text>
+                <Text style={styles.submitButton} onPress={submitHandler}> Submit </Text>
                 </KeyboardAvoidingView>
                 </ScrollView>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    title: {
+        fontSize: 23,
+        fontWeight: 'bold',
+    },
+    textInput: {
+        marginTop: 10,
+        borderWidth: 1,
+        borderColor: '#a2a2a2',
+        borderRadius: 5,
+        fontSize: 20,
+        lineHeight: 30,
+        padding: 10
+    },
+    submitButton: {
+        fontWeight: 'bold',
+        color: 'white',
+        backgroundColor: '#0481eb',
+        borderRadius: 3,
+        textAlign: 'center',
+        padding: 10,
+        fontSize: 20,
+        marginTop: 20
+    },
+    container: {
+        width:"100%",
+        height:"100%",
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 20
+      }
+});
 
 export default AddNurse;
