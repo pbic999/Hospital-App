@@ -1,51 +1,133 @@
 import React, { Component, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Button, Modal, TextInput } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Button, Modal, TextInput, SafeAreaView } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import { Picker } from 'react-native-picker-dropdown';
 import DatePicker from 'react-native-datepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons } from '@expo/vector-icons';
+import axios from 'axios';
 
 
 const FiltersScreen = (props) => {
 
+    const filterByDutyDoctor = (selectedDoctor) => {
+        console.log(selectedDoctor);
+        axios.get('http://192.168.0.106:5000/patient/duty_doctor/',{
+            selectedDoctor
+        }).then((res)=> console.log(res.data));
+    }
+
+    const filterByWard = (selectedWard) => {
+        console.log(selectedWard);
+        axios.get('http://192.168.0.106:5000/patient/ward/',{
+            selectedWard
+        }).then((res)=> console.log(res.data));
+    }
+
+    const filterByBp = (bpSys, bpDia) => {
+        const bp = bpSys + '-' + bpDia;
+        axios.get('http://192.168.0.106:5000/patient/bp/',{
+            bp
+        }).then((res)=> console.log(res.data));
+    }
+
+    const filterBySpO2 = (spo2) => {
+        axios.get('http://192.168.0.106:5000/patient/spo2/',{
+            spo2
+        }).then((res)=> console.log(res.data));
+    }
+
+    const filterByPr = (pr) => {
+        axios.get('http://192.168.0.106:5000/patient/pr/',{
+            pr
+        }).then((res)=> console.log(res.data));
+    }
+    
+    const filterByRr = (rr) => {
+        axios.get('http://192.168.0.106:5000/patient/rr/',{
+            rr
+        }).then((res)=> console.log(res.data));
+    }
+
+    const filterByDate = (date) => {
+        axios.get('http://192.168.0.106:5000/patient/doa/',{
+            date
+        }).then((res)=> console.log(res.data));
+    }
+
     const [showModal, setShowModal] = props.modalState;
+    const filterFunctions = props.filterFunctions;
 
     //Item array for the doctor dropdown
+    const [doctors, setDoctors] = props.filterStates[0];
+    const [selectedDoctor, setSelectedDoctor] = props.filterStates[1];
     const doctorItems = [
         //name key is must.It is to show the text in front
-        { id: 1, name: 'Arun' },
-        { id: 2, name: 'Amit' },
-        { id: 3, name: 'Venkat' },
+        { id: 1, name: 'Venkat' },
+        { id: 2, name: 'Ram' },
+        { id: 3, name: 'Raghav' },     
     ];
+    for (var i = 0; i < doctors.length; ++i) {
+        doctorItems.push({id: i, name: doctors[i]});
+    }
 
     //Item array for the ward dropdown
+    const [wards, setWardNames] = props.filterStates[2];
+    const [selectedWard, setSelectedWard] = props.filterStates[3];
     const wardItems = [
         //name key is must.It is to show the text in front
         { id: 1, name: 'I-GS1' },
         { id: 2, name: 'I-GS2' },
         { id: 3, name: 'I-GS3' },
     ];
+    for (var i = 0; i < wards.length; ++i) {
+        wardItems.push({id: i, name: wards[i]});
+    }
 
     //Item array for the O2 NIV MV ITEMS dropdown
+    const [o2NivMvs, setO2NivMvs] = props.filterStates[10];
+    const [selectedO2NivMv, setSelectedO2NivMv] = props.filterStates[11]; 
     const o2NivMvItems = [
         //name key is must.It is to show the text in front
         { id: 1, name: 'RA' },
         { id: 2, name: '5L O2' },
         { id: 3, name: '6L O2' },
     ];
+    for (var i = 0; i < o2NivMvs.length; ++i) {
+        o2NivMvItems.push({id: i, name: o2NivMvs[i]});
+    }
 
      //Item array for the CO-MORBID dropdown
+     const [coMorBids, setCoMorBids] = props.filterStates[12];
+     const [selectedCoMorBid, setSelectedCoMorBid] = props.filterStates[13];
      const coMorBidItems = [
         //name key is must.It is to show the text in front
         { id: 1, name: 'HTN' },
         { id: 2, name: 'DM' },
         { id: 3, name: 'CAD' },
     ];
+    for (var i = 0; i < coMorBids.length; ++i) {
+        coMorBidItems.push({id: i, name: coMorBids[i]});
+    }
+
+
+    // onSelect funtions for searchable dropdowns
+
+    const selectDutyDoctor = (item, filterByDutyDoctor) => {
+        setSelectedDoctor(item.name);
+        filterByDutyDoctor(selectedDoctor);
+        setShowModal(!showModal);
+    }
+
+    const selectWard = (item, filterByWard) => {
+        setSelectedWard(item.name);
+        filterByWard(selectedWard);
+        setShowModal(!showModal);
+    }
 
 
     //  Data for bpSys dropdown
-    const [bpSys, setBpSys] = useState('');
+    const [bpSys, setBpSys] = props.filterStates[4];
     const bpSysList = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
     const handleBpSysFilter = (bpSys) => {
         setBpSys(bpSys);
@@ -53,53 +135,59 @@ const FiltersScreen = (props) => {
     }
 
     //  Data for bpDia dropdown
-    const [bpDia, setBpDia] = useState('');
+    const [bpDia, setBpDia] = props.filterStates[5];
     const bpDiaList = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
     const handleBpDiaFilter = (bpDia) => {
         setBpDia(bpDia);
         console.log("bpDia filter set to : " + bpDia);
+        setShowModal(!showModal);
     }
 
     //  Data for spo2 dropdown
-    const [spo2, setSpo2] = useState('');
+    const [spo2, setSpo2] = props.filterStates[6];
     const spo2List = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
-    const handleSpo2Filter = (spo2) => {
+    const handleSpo2Filter = (spo2, filterFunctions) => {
         setSpo2(spo2);
+        filterBySpO2(spo2);
         console.log("spo2 filter set to : " + spo2);
+        setShowModal(!showModal);
     }
 
     //  Data for pr dropdown
-    const [pr, setPr] = useState('');
+    const [pr, setPr] = props.filterStates[7];
     const prList = ['<70%', '70-79 %', '80-89 %', '90-99 %'];
-    const handlePrFilter = (pr) => {
-        setpr(pr);
+    const handlePrFilter = (pr, filterFunctions) => {
+        setPr(pr);
+        filterByPr(pr);
         console.log("pr filter set to : " + pr);
+        setShowModal(!showModal);
     }
 
     //  Data for rr dropdown
-    const [rr, setRr] = useState('');
+    const [rr, setRr] = props.filterStates[8];
     const rrList = ['<70%', '70-79 %', '80-89%', '90-99 %'];
-    const handleRrFilter = (rr) => {
-        setrr(rr);
+    const handleRrFilter = (rr, filterFunctions) => {
+        setRr(rr);
+        filterByRr(rr);
         console.log("rr filter set to : " + rr);
+        setShowModal(!showModal);
     }
 
     // DOA
     //https://github.com/react-native-datetimepicker/datetimepicker
-    const [date, setDate] = useState(new Date(1621597631000));
+    const [date, setDate] =  props.filterStates[9];
     const [show, setShow] = useState(false);
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         console.log(currentDate);
         setShow(false);
         setDate(currentDate);
+        filterByDate(date);
     };
 
     const showDatepicker = () => {
         setShow(true);
     }
-
-
 
 
     const styles = StyleSheet.create({
@@ -179,8 +267,9 @@ const FiltersScreen = (props) => {
         
     });
 
-    return(
 
+
+    return(
         <Modal
             animationType={'slide'}
             transparent={false}
@@ -188,10 +277,10 @@ const FiltersScreen = (props) => {
             onRequestClose={() => {
                 console.log('Modal has been closed.');
         }}>
-            {/*All views of Modal*/} 
+            <ScrollView keyboardShouldPersistTaps = 'always'>
+            {/*All views of Modal*/}
             {/*Animation can be slide, slide, none*/}
-            <View style={styles.container}>
-            <ScrollView style={styles.modal}>
+            <View style={styles.modal}>
                 <Text style={styles.titleText}>
                     Filters :
                 </Text>
@@ -201,7 +290,7 @@ const FiltersScreen = (props) => {
                 <SearchableDropdown
                     onTextChange={(text) => console.log(text)}
                     //On text change listner on the searchable input
-                    onItemSelect={(item) => console.log(JSON.stringify(item))}
+                    onItemSelect={(item) => selectDutyDoctor(item, filterByDutyDoctor)}
                     //onItemSelect called after the selection from the dropdown
                     containerStyle={styles.containerStyle}
                     //suggestion container style
@@ -219,6 +308,8 @@ const FiltersScreen = (props) => {
                     //reset textInput Value with true and false state
                     underlineColorAndroid="transparent"
                     //To remove the underline from the android input
+                    listProps={{ nestedScrollEnabled: true }}
+                    //disabling the scrolling part in COMORBID
                 />
                 <Text style={styles.headingText}>
                     Ward Name
@@ -226,7 +317,7 @@ const FiltersScreen = (props) => {
                 <SearchableDropdown
                     onTextChange={(text) => console.log(text)}
                     //On text change listner on the searchable input
-                    onItemSelect={(item) => alert(JSON.stringify(item))}
+                    onItemSelect={(item) => selectWard(item, filterByWard)}
                     //onItemSelect called after the selection from the dropdown
                     containerStyle={styles.containerStyle}
                     //suggestion container style
@@ -244,6 +335,8 @@ const FiltersScreen = (props) => {
                     //reset textInput Value with true and false state
                     underlineColorAndroid="transparent"
                     //To remove the underline from the android input
+                    listProps={{ nestedScrollEnabled: true}}
+                     //disabling the scrolling part in COMORBID
                 />
                 <View style={{'flexDirection': 'row', 'justifyContent':'space-around'}}>
                         <TextInput style={styles.input}
@@ -279,7 +372,7 @@ const FiltersScreen = (props) => {
                         <Picker
                             selectedValue={spo2}
                             style={{ height: 50, width: 150, backgroundColor: "#0481eb", borderWidth: 1, borderRadius: 5 }}
-                            onValueChange={(itemValue, itemIndex) => handleSpo2Filter(itemValue)}>
+                            onValueChange={(itemValue, itemIndex) => handleSpo2Filter(itemValue, filterFunctions)}>
                             <Picker.Item label="Doctor" value={null} />
                             {spo2List.map((x, index) => {
                             return <Picker.Item key={index} label={x} value={x} />})}
@@ -294,7 +387,7 @@ const FiltersScreen = (props) => {
                         <Picker
                             selectedValue={pr}
                             style={{ height: 50, width: 150, backgroundColor: "#0481eb", borderWidth: 1, borderRadius: 5 }}
-                            onValueChange={(itemValue, itemIndex) => handlePrFilter(itemValue)}>
+                            onValueChange={(itemValue, itemIndex) => handlePrFilter(itemValue, filterFunctions)}>
                             <Picker.Item label="Doctor" value={null} />
                             {prList.map((x, index) => {
                             return <Picker.Item key={index} label={x} value={x} />})}
@@ -307,7 +400,7 @@ const FiltersScreen = (props) => {
                         <Picker
                             selectedValue={rr}
                             style={{ height: 50, width: 150, backgroundColor: "#0481eb", borderWidth: 1, borderRadius: 5 }}
-                            onValueChange={(itemValue, itemIndex) => handleRrFilter(itemValue)}>
+                            onValueChange={(itemValue, itemIndex) => handleRrFilter(itemValue, filterFunctions)}>
                             <Picker.Item label="Doctor" value={null} />
                             {rrList.map((x, index) => {
                             return <Picker.Item key={index} label={x} value={x} />})}
@@ -324,7 +417,7 @@ const FiltersScreen = (props) => {
                     <SearchableDropdown
                         onTextChange={(text) => console.log(text)}
                         //On text change listner on the searchable input
-                        onItemSelect={(item) => alert(JSON.stringify(item))}
+                        onItemSelect={(item) => {alert(JSON.stringify(item))}}
                         //onItemSelect called after the selection from the dropdown
                         containerStyle={styles.containerStyle}
                         //suggestion container style
@@ -342,10 +435,10 @@ const FiltersScreen = (props) => {
                         //reset textInput Value with true and false state
                         underlineColorAndroid="transparent"
                         //To remove the underline from the android input
+                        listProps={{ nestedScrollEnabled: true }}
+                        //disabling the scrolling part in COMORBID
                     />
                 </View>
-
-                    
 
                 <View>
                     {/* CO-MORBID Fresh Compliments */}
@@ -356,7 +449,7 @@ const FiltersScreen = (props) => {
                     <SearchableDropdown
                         onTextChange={(text) => console.log(text)}
                         //On text change listner on the searchable input
-                        onItemSelect={(item) => alert(JSON.stringify(item))}
+                        onItemSelect={(item) => {alert(JSON.stringify(item))}}
                         //onItemSelect called after the selection from the dropdown
                         containerStyle={styles.containerStyle}
                         //suggestion container style
@@ -370,10 +463,12 @@ const FiltersScreen = (props) => {
                         //default selected item index
                         placeholder="CO-MORBID"
                         //place holder for the search input
-                        resetValue={false}
+                        resetValue={true}
                         //reset textInput Value with true and false state
                         underlineColorAndroid="transparent"
                         //To remove the underline from the android input
+                        listProps={{ nestedScrollEnabled: true }}
+                        //disabling the scrolling part in COMORBID
                     />
                 </View>
 
@@ -386,8 +481,8 @@ const FiltersScreen = (props) => {
                     />
                 </View>
 
-            </ScrollView>
             </View>
+            </ScrollView>
         </Modal>
     
     );

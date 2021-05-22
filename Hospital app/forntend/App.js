@@ -1,6 +1,6 @@
 import React from 'react';
-import PatientEntryForm from './Screens/PatientEntryForm.js';
-import PatientFilter from './Screens/PatientFilter.js';
+import PatientEntryForm from './screens/PatientEntryForm.js';
+import PatientFilter from './screens/PatientFilter.js';
 import SignIn from './Screens/SignIn';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -9,10 +9,9 @@ import PatientDetails from './Screens/PatientDetails.jsx';
 import AddDocotr from './Screens/AddDocotr.js';
 import AddNurse from './Screens/AddNurse.jsx';
 import AddHospital from './Screens/AddHospital.jsx';
-import FiltersScreen from './Screens/FitersScreen.js';
+import WardsStatusScreen from './screens/WardsStatusScreen';
 
 const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
 
 export default function App() {
   return (
@@ -31,6 +30,7 @@ export default function App() {
               <Drawer.Screen name="PatientDetails" component={PatientDetails} />
               <Drawer.Screen name="SignIn" component={SignIn} />
               <Drawer.Screen name="Add hospital" component={AddHospital} />
+              <Drawer.Screen name="Wards Status" component={WardsStatusScreen} />
             </Drawer.Navigator>
           </NavigationContainer>
         </>
