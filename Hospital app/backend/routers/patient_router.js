@@ -101,9 +101,9 @@ patientRouter.get('/DM/:hospital_id', async (req,res) => {
     }
 })
 
-patientRouter.get('/doa/:doa/:hospital_id', async (req,res) => {
+patientRouter.get('/doa/:date/:hospital_id', async (req,res) => {
     try {
-        const doa = req.params.doa
+        const doa = req.params.date
         const hospital_id = req.params.hospital_id
         const patients = await patientModel.find({$and:[{ doa,hospital_id }]})
         res.status(200).send(patients)
@@ -132,6 +132,19 @@ patientRouter.get('/pr/:pr/:hospital_id', async (req,res) => {
         const pr = req.params.pr
         const hospital_id = req.params.hospital_id
         const patients = await patientModel.find({$and:[{ pr,hospital_id }]})
+        res.status(200).send(patients)
+    }
+    catch (err) {
+        res.status(500).send(err)
+        console.log(err);
+    }
+})
+
+patientRouter.get('/rr/:rr/:hospital_id', async (req,res) => {
+    try {
+        const rr = req.params.rr
+        const hospital_id = req.params.hospital_id
+        const patients = await patientModel.find({$and:[{ rr,hospital_id }]})
         res.status(200).send(patients)
     }
     catch (err) {

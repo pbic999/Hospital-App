@@ -19,8 +19,13 @@ mongoose.connect(mongo_url, {
     console.log(err)
 )
 
-app.get('/', (req,res) => {
+app.get('/', async (req,res) => {
+    try{
     res.send('hello')
+    }
+    catch (err) {
+        console.log(err);
+    }
 })
 app.use('/patient',patientRouter)
 app.use('/user',userRouter)

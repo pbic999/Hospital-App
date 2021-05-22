@@ -70,7 +70,7 @@ const WardsStatusScreen = () => {
         },
         title: {
             textAlign: 'center',
-            fontSize: 20,
+            fontSize: 30,
             fontWeight: 'bold',
             padding: 20,
         },
@@ -130,32 +130,32 @@ const WardsStatusScreen = () => {
                             <Text></Text>
                         </View>
                         <View style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center'  }}>
-                            <Text>O2 BEDS</Text>
+                            <Text style={{fontSize: 20, fontWeight: "bold"}}>O2 BEDS</Text>
                         </View>
                         <View style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center' }}>
-                            <Text>Non O2 BEDS</Text>
+                            <Text style={{fontSize: 20, fontWeight: "bold"}}>Non O2 BEDS</Text>
                         </View>                   
                     </View>
                     <View style={{ alignSelf: 'stretch', flexDirection: 'row' }}>
                         <View style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center'  }}>
-                            <Text>EMPTY</Text>
+                            <Text style={{fontSize: 20, fontWeight: "bold"}}>EMPTY</Text>
                         </View>
                         <View style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center'  }}>
-                            <Text>5</Text>
+                            <Text style={{fontSize: 15}}>5</Text>
                         </View>
                         <View style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center' }}>
-                            <Text>54</Text>
+                            <Text style={{fontSize: 15}}>54</Text>
                         </View>                        
                     </View>
                     <View style={{ alignSelf: 'stretch', flexDirection: 'row' }}>
                         <View style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center'  }}>
-                            <Text>FILLED</Text>
+                            <Text style={{fontSize: 20, fontWeight: "bold"}}>FILLED</Text>
                         </View>
                         <View style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center'  }}>
-                            <Text>41</Text>
+                            <Text style={{fontSize: 15}}>41</Text>
                         </View>
                         <View style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center' }}>
-                            <Text>63</Text>
+                            <Text style={{fontSize: 15}}>63</Text>
                         </View>                         
                     </View>
                 </View>

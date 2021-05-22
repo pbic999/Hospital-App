@@ -1,26 +1,24 @@
 import { useState } from "react"
 import { StyleSheet, Image, TextInput, Text, View, Keyboard } from "react-native";
 import React from 'react'
+import axios from "axios";
 
 const SignIn = () => {
-    const [email,setEmail] = useState();
+    const [mobile_no,setMobile_no] = useState();
     const [password,setPassword] = useState();
-    const [hospitalId,setHospitalId] = useState()
     const [loading,setLoading] = useState(false);
     const [user,setUser] = useState();
 
     const submitHandler = (e) => {
-        console.log(email);
-        console.log(password);
+        axios.post('http://192.168.0.106:5000/user/signin',{mobile_no,password})
+        .then((res)=> console.log(res.data))
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.form}>
-            <TextInput onChangeText={val => setHospitalId(val)} 
-                style={styles.input} placeholder='Hospital ID' />
-                <TextInput onChangeText={val => setEmail(val)} 
-                style={styles.input} placeholder='Email' />
+                <TextInput onChangeText={val => setMobile_no(val)} 
+                style={styles.input} placeholder='Mobile no.' />
                 <TextInput onChangeText={val => setPassword(val)}
                 secureTextEntry = {true}
                 style={styles.input} placeholder='Password' />

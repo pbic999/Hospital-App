@@ -56,7 +56,7 @@ const patientSchema = mongoose.Schema({
         require: true
     },
     complaints: {
-        type: String,
+        type: Array,
     },
     o2_niv_mv_level: {
         type: String,

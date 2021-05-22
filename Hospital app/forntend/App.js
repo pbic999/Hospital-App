@@ -12,7 +12,6 @@ import AddHospital from './Screens/AddHospital.jsx';
 import WardsStatusScreen from './screens/WardsStatusScreen';
 
 const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
 
 export default function App() {
   return (
@@ -22,7 +21,7 @@ export default function App() {
               initialRouteName="Filter"
               drawerContentOptions={{
               activeTintColor: '#0481eb',
-              itemStyle: { marginVertical: 5 },
+              itemStyle: { marginVertical: 5 }, 
             }}>
               <Drawer.Screen name="Filter" component={PatientFilter} />
               <Drawer.Screen name="Add doctor" component={AddDocotr} />
