@@ -61,6 +61,7 @@ const patientSchema = mongoose.Schema({
     o2_niv_mv_level: {
         type: String,
     },
+    bed: String,
     duty_doctor: Array,
     duty_nurse: Array,
     hospital_id: String

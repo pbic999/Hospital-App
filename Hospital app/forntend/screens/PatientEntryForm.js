@@ -5,6 +5,22 @@ import { Button,  } from 'react-native-paper';
 
 const PatientEntryForm = () => {
 
+    const [s_no, setS_no] = useState();
+    const [patient_name, setPatient_name] = useState();
+    const [ward_name, setWard_name] = useState();
+    const [UHID, setUHID] = useState();
+    const [hospital_no, setHospital_no] = useState();
+    const [bed, setbed] = useState();
+    const [age, setAge] = useState();
+    const [sex, setSex] = useState();
+    const [pr, setPr] = useState();
+    const [bp, setBp] = useState();
+    const [rr, setRr] = useState();
+    const [spo2,setSpo2] = useState();
+    const [o2_niv_mv, setO2_niv_mv] = useState();
+    const [o2_niv_mv_level, setO2_niv_mv_level] = useState();
+    const [freshComplaints, setFreshComplaints] = useState();
+    const [dutyDoctors,setDutyDoctors] = useState();
     const [s_no, setS_no] = useState('');
     const [patient_name, setPatient_name] = useState('');
     const [ward_name, setWard_name] = useState('');
@@ -137,23 +153,23 @@ const PatientEntryForm = () => {
         const complaints = freshComplaints.split(',');
         
         axios.post('http://192.168.0.106:5000/patient/add',{
-                patient_name,
-                s_no,
-                ward_name,
-                UHID,
-                hospital_no,
-                doa,
-                age,
-                sex,
-                pr,
-                bp,
-                rr,
-                spo2,
-                o2_niv_mv,
-                o2_niv_mv_level,
-                complaints,
-                duty_doctor
-            }).then((res)=> console.log(res.data));
+            patient_name,
+            s_no,
+            ward_name,
+            UHID,
+            hospital_no,
+            bed,
+            age,
+            sex,
+            pr,
+            bp,
+            rr,
+            spo2,
+            o2_niv_mv,
+            o2_niv_mv_level,
+            complaints,
+            duty_doctor
+        }).then((res)=> console.log(res.data))
 
         setS_no('');
         setPatient_name('');
@@ -224,10 +240,10 @@ const PatientEntryForm = () => {
                         onChangeText={(text)=>setHospital_no(text)}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        placeholder='DOA (dd/mm/yy)'
-                        value={doa}
+                        placeholder='Bed type(O2/ICU..)'
+                        value={bed}
                         theme={{colors:{primary: "#0481eb"}}}
-                        onChangeText={(text)=>setDoa(text)}
+                        onChangeText={(text)=>setbed(text)}
                         style={styles.smallTextInput} />
                     </View>
                     <View style={styles.smallFieldsContainer}>
@@ -319,7 +335,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         fontSize: 20,
         lineHeight: 30,
-        padding: 10
+        padding: 8
     },
     smallFieldsContainer: {
         flexDirection: 'row',
@@ -332,7 +348,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         fontSize: 20,
         lineHeight: 30,
-        padding: 10
+        padding: 8
     },
     submitButton: {
         fontWeight: 'bold',
