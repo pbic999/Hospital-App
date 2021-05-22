@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 
 const userSchema = mongoose.Schema({
-    id: String,
     mobile_no: {
         unique: true,
         require: true,
@@ -19,7 +18,6 @@ const userSchema = mongoose.Schema({
     designation: String,
     qualification: String,
     role: String,
-    hospital_name: String,
     isAdmin: Boolean,
     hospital_id: String
 })
