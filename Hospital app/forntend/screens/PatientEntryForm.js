@@ -10,7 +10,7 @@ const PatientEntryForm = () => {
     const [ward_name, setWard_name] = useState();
     const [UHID, setUHID] = useState();
     const [hospital_no, setHospital_no] = useState();
-    const [doa, setDoa] = useState();
+    const [bed, setbed] = useState();
     const [age, setAge] = useState();
     const [sex, setSex] = useState();
     const [pr, setPr] = useState();
@@ -32,7 +32,7 @@ const PatientEntryForm = () => {
             ward_name,
             UHID,
             hospital_no,
-            doa,
+            bed,
             age,
             sex,
             pr,
@@ -98,10 +98,10 @@ const PatientEntryForm = () => {
                         onChangeText={(text)=>setHospital_no(text)}
                         style={styles.smallTextInput} />
                         <TextInput 
-                        placeholder='DOA (dd/mm/yy)'
-                        value={doa}
+                        placeholder='Bed type(O2/ICU..)'
+                        value={bed}
                         theme={{colors:{primary: "#0481eb"}}}
-                        onChangeText={(text)=>setDoa(text)}
+                        onChangeText={(text)=>setbed(text)}
                         style={styles.smallTextInput} />
                     </View>
                     <View style={styles.smallFieldsContainer}>
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         fontSize: 20,
         lineHeight: 30,
-        padding: 10
+        padding: 8
     },
     smallFieldsContainer: {
         flexDirection: 'row',
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         fontSize: 20,
         lineHeight: 30,
-        padding: 10
+        padding: 8
     },
     submitButton: {
         fontWeight: 'bold',
