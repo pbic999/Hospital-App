@@ -122,6 +122,13 @@ const AddDocotr = () => {
             role: 'doctor'
         }).then((res) => {console.log(res.data);alert("Doctor successfully added!");})
         .catch((err) => {console.log('user already exist');alert('user already exists')});
+
+        setName('');
+        setMobile_no('');
+        setGender('');
+        setDesignation('');
+        setQualification('');
+        setPassword('');
     }
 
     return (

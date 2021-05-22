@@ -76,7 +76,12 @@ const AddNurse = () => {
             password,
             role: 'nurse'
         }).then((res) => console.log(res.data))
-        .catch((err) => console.log('user already exist'))
+        .catch((err) => console.log('user already exist'));
+
+        setName('');
+        setMobile_no('');
+        setGender('');
+        setPassword('');
     }
 
     return (

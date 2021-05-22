@@ -104,6 +104,15 @@ const AddHospital = () => {
                 password
             }).then((res)=> console.log(res.data)).catch((err)=> console.log(err))
         console.log('request sended to server');
+
+        setHospital_name('');
+        setBranch('');
+        setName('');
+        setMobile_no('');
+        setGender('');
+        setDesignation('');
+        setQualification('');
+        setPassword('');
     }
 
 
