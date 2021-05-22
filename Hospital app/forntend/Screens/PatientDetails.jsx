@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
-import { StyleSheet, TextInput , Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
+import {TextInput} from 'react-native-material-textfield'
 
 const PatientDetails = () => {
     const [patientDetails,setPatientDetails] = useState({})
@@ -86,88 +87,46 @@ const PatientDetails = () => {
                     <Text style={styles.title}>Patient Details :</Text>
                     <TextInput 
                         value={patientDetails.name}
-                        theme={{colors:{primary: "#0481eb"}}}
-                        style={styles.textInput}
+                        label='Name'
                         editable = {false}
                     />
                     <TextInput 
-                        placeholder='Duty Doctor Name'
-                        value={patientDetails.duty_doctors}
-                        theme={{colors:{primary: "#0481eb"}}}
-                        style={styles.textInput}
-                        editable = {editable}
+                        label='Duty Doctor Name'
                     />
                     <View style={styles.smallFieldsContainer}>
                     <TextInput 
-                        placeholder='Name of Ward'
-                        theme={{colors:{primary: "#0481eb"}}}
-                        value={patientDetails.ward}
-                        style={styles.smallTextInput} editable = {editable}/>
+                        label='Name of Ward'/>
                         <TextInput 
-                        placeholder='UHID'
-                        theme={{colors:{primary: "#0481eb"}}}
-                        style={styles.smallTextInput} 
-                        value={patientDetails.UHID}
-                        editable = {editable}    
+                        label='UHID'
                     />
                     </View>
                     <View style={styles.smallFieldsContainer}>
                     <TextInput 
-                        placeholder='Hospital No'
-                        theme={{colors:{primary: "#0481eb"}}}
-                        value={patientDetails.hospital_no}
-                        style={styles.smallTextInput} editable = {false}/>
+                        label='Hospital No'/>
                         <TextInput 
-                        placeholder='DOA'
-                        theme={{colors:{primary: "#0481eb"}}}
-                        value={patientDetails.doa}
-                        style={styles.smallTextInput} editable = {false}/>
+                        label='DOA'/>
                     </View>
                     <View style={styles.smallFieldsContainer}>
                     <TextInput 
-                        placeholder='Age'
-                        theme={{colors:{primary: "#0481eb"}}}
-                        value={patientDetails.age}
-                        style={styles.smallTextInput} editable = {false}/>
+                        label='Age'/>
                         <TextInput 
-                        placeholder='Sex'
-                        theme={{colors:{primary: "#0481eb"}}}
-                        value={patientDetails.sex}
-                        style={styles.smallTextInput} editable = {false}/>
+                        label='Sex'/>
                     </View>
                     <View style={styles.smallFieldsContainer}>
                     <TextInput 
-                        placeholder='PR'
-                        theme={{colors:{primary: "#0481eb"}}}
-                        value={patientDetails.pr}
-                        style={styles.smallTextInput} editable = {editable}/>
+                        label='PR'/>
                         <TextInput 
-                        placeholder='BP'
-                        theme={{colors:{primary: "#0481eb"}}}
-                        value={patientDetails.bp}
-                        style={styles.smallTextInput} editable = {editable}/>
+                        label='BP'/>
                         <TextInput 
-                        placeholder='RR'
-                        theme={{colors:{primary: "#0481eb"}}}
-                        value={patientDetails.rr}
-                        style={styles.smallTextInput} editable = {editable}/>
+                        label='RR'/>
                     </View>
                     <View style={styles.smallFieldsContainer}>
                     <TextInput 
-                        placeholder='SPO2'
-                        theme={{colors:{primary: "#0481eb"}}}
-                        value={patientDetails.spo2}
-                        style={styles.smallTextInput} editable = {editable}/>
+                        label='SPO2'/>
                         <TextInput 
-                        placeholder='o2 NIV MV'
-                        theme={{colors:{primary: "#0481eb"}}}
-                        value={patientDetails.o2_niv_mv}
-                        style={styles.smallTextInput} editable = {editable}/>
+                        label='o2 NIV MV'/>
                         <TextInput 
-                        placeholder='Complaints'
-                        theme={{colors:{primary: "#0481eb"}}}
-                        value={patientDetails.fresh_complaint}
-                        style={styles.smallTextInput} editable = {editable}/>
+                        label='Complaints'/>
                     </View>
                     <View style={{flexDirection:'row',justifyContent: 'space-around'}}>
                     <Text style={styles.submitButton} onPress={buttonHandler}>

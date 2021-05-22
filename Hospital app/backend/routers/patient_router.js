@@ -75,12 +75,14 @@ patientRouter.post('/add/record', async (req,res)=> {
     }
 })*/
 
+
+//correct
 patientRouter.get('/UHIDOrName/:UHIDOrName/:hospital_id', async (req,res) => {
     try {
         const UHIDOrName = req.params.UHIDOrName
         const hospital_id = req.params.hospital_id
         const patient = await patientModel.find({$and:[{hospital_id},
-            {$or:[{UHID:UHIDOrName},{patient_name:UHIDOrName}]}]})
+            {$or:[{UHID:UHIDOrName},{patient_name:`/.*${UHIDOrName}.*/`}]}]})
         res.status(200).send(patient)
     }
     catch (err) {
@@ -88,6 +90,8 @@ patientRouter.get('/UHIDOrName/:UHIDOrName/:hospital_id', async (req,res) => {
         console.log(err);
     }
 })
+
+
 
 patientRouter.get('/DM/:hospital_id', async (req,res) => {
     try {
@@ -101,6 +105,8 @@ patientRouter.get('/DM/:hospital_id', async (req,res) => {
     }
 })
 
+
+//correct
 patientRouter.get('/doa/:doa/:hospital_id', async (req,res) => {
     try {
         const doa = req.params.doa
@@ -153,11 +159,13 @@ patientRouter.get('/spo2/:spo2/:hospital_id', async (req,res) => {
     }
 })
 
+
+//correct
 patientRouter.get('/duty_doctor/:doctor/:hospital_id', async (req,res) => {
     try {
         const duty_doctor = req.params.doctor
         const hospital_id = req.params.hospital_id
-        const patients = await patientModel.find({$and:[{ duty_doctor,hospital_id }]})
+        const patients = await patientModel.find({$and:[{ duty_doctor: `/.*${duty_doctor}*/`,hospital_id }]})
         res.status(200).send(patients)
     }
     catch (err) {
@@ -166,6 +174,8 @@ patientRouter.get('/duty_doctor/:doctor/:hospital_id', async (req,res) => {
     }
 })
 
+
+//correct
 patientRouter.get('/ward/:ward/:hospital_id', async (req,res) => {
     try {
         const ward = req.params.ward
@@ -179,6 +189,7 @@ patientRouter.get('/ward/:ward/:hospital_id', async (req,res) => {
     }
 })
 
+//correct
 patientRouter.get('/get/record/:UHID/:date/:hospital_id', async (req,res) => {
     try{
         const UHID =  req.params.UHID
