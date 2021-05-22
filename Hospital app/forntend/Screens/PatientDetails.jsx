@@ -2,8 +2,10 @@ import React, { useState,useEffect } from 'react';
 import { StyleSheet, TextInput , Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
 
 const PatientDetails = () => {
-    const [patientDetails,setPatientDetails] = useState({})
-    const [editable,setEditable] = useState(false)
+    const [patientDetails,setPatientDetails] = useState({});
+    const [editable,setEditable] = useState(false);
+    const [sno, setSno] = useState('');
+
     useEffect(()=> {
         setPatientDetails({
             s_no: '1',
@@ -22,7 +24,7 @@ const PatientDetails = () => {
             fresh_complaint: 'DM',
             duty_doctors: 'Doctor'
         })
-    },[])
+    },[]);
 
     const buttonHandler = () => {
         if(editable) {

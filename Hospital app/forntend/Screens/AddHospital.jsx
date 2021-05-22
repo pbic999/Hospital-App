@@ -14,7 +14,85 @@ const AddHospital = () => {
     const [password,setPassword] = useState()
     const [loading,setLoading] = useState(false);
 
+
+    const verfiyMobileNumber = () => {
+        var phoneno = /^\d{10}$/;
+
+        if (mobile_no.match(phoneno)) {
+            if (mobile_no[0] > '5') {
+                return true;
+            } else {
+                alert('invalid mobile number!');
+                return false;
+            }
+        } else {
+            alert("invalid mobile number!");
+            return false;
+        }
+    }
+
+    const verfiyPassword = () => {
+        var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,20}$/;
+
+        if (password.match(passw)) {
+            return true;
+        } else {
+            alert("password must contain a digit, a upper case character and lower case character!");
+            return false;
+        }
+    }
+
+    const checkTextInput = () => {
+        //Check for the Hospital Name TextInput
+        if (!hospital_name.trim()) {
+          alert('Please Enter Hospital Name!');
+          return false;
+        }
+        //Check for the Branch Name TextInput
+        if (!branch.trim()) {
+          alert('Please Enter Branch Name!');
+          return false;
+        }
+        //Check for the Admin Name TextInput
+        if (!name.trim()) {
+          alert('Please Enter Admin Name!');
+          return false;
+        }
+        //Check for the Mobile no. TextInput
+        if (!mobile_no.trim()) {
+          alert('Please Enter Mobile Number!');
+          return false;
+        }
+        if (!verfiyMobileNumber()) {
+            return false;
+        }
+        //Check for the Gender TextInput
+        if (!gender.trim()) {
+            alert('Please Enter gender');
+            return false;
+        }
+        if (!designation.trim()) {
+            alert('Please Enter Designation');
+            return false;
+        }
+        if (!qualification.trim()) {
+            alert('Please Enter Qualification');
+            return false;
+        }
+        if (!password.trim()) {
+            alert('Please Enter password');
+            return false;
+        }
+        if (!verfiyPassword()) {
+            return false;
+        }
+        //Checked Successfully
+        //Do whatever you want
+        return true;
+    };
+
     const submitHandler = (e) => {
+        if (!checkTextInput()) return;
         axios.post('http://192.168.0.106:5000/user/add/admin',{
                 hospital_name, 
                 branch,
@@ -27,6 +105,7 @@ const AddHospital = () => {
             }).then((res)=> console.log(res.data)).catch((err)=> console.log(err))
         console.log('request sended to server');
     }
+
 
     return (
         <View style={styles.container}>
