@@ -11,54 +11,69 @@ import axios from 'axios';
 const FiltersScreen = (props) => {
 
     const [patientList,setPatientList] = props.patientListState;
+    const [loading, setLoading] = props.loadingState;
 
     useEffect(() => {
         setPatientList(['patient1','patient2','patient3'])
     },[]);
 
-    const filterByDutyDoctor = (selectedDoctor) => {
+    const filterByDutyDoctor = async (selectedDoctor) => {
         console.log(selectedDoctor);
-        axios.get('http://192.168.0.106:5000/patient/duty_doctor/',{
+        setLoading(true);
+        await axios.get('http://192.168.0.106:5000/patient/duty_doctor/', {
             selectedDoctor
         }).then((res)=> console.log(res.data));
+        setLoading(false);
     }
 
-    const filterByWard = (selectedWard) => {
+    const filterByWard = async (selectedWard) => {
         console.log(selectedWard);
-        axios.get('http://192.168.0.106:5000/patient/ward/',{
+        setLoading(true);
+        await axios.get('http://192.168.0.106:5000/patient/ward/',{
             selectedWard
         }).then((res)=> console.log(res.data));
+        setLoading(false);
     }
 
-    const filterByBp = (bpSys, bpDia) => {
+    const filterByBp = async (bpSys, bpDia) => {
         const bp = bpSys + '-' + bpDia;
-        axios.get('http://192.168.0.106:5000/patient/bp/',{
+        setLoading(true);
+        await axios.get('http://192.168.0.106:5000/patient/bp/',{
             bp
         }).then((res)=> console.log(res.data));
+        setLoading(false);
     }
 
-    const filterBySpO2 = (spo2) => {
-        axios.get('http://192.168.0.106:5000/patient/spo2/',{
+    const filterBySpO2 = async (spo2) => {
+        setLoading(true);
+        await axios.get('http://192.168.0.106:5000/patient/spo2/',{
             spo2
         }).then((res)=> console.log(res.data));
+        setLoading(false);
     }
 
-    const filterByPr = (pr) => {
-        axios.get('http://192.168.0.106:5000/patient/pr/',{
+    const filterByPr = async (pr) => {
+        setLoading(true);
+        await axios.get('http://192.168.0.106:5000/patient/pr/',{
             pr
         }).then((res)=> console.log(res.data));
+        setLoading(false);
     }
     
-    const filterByRr = (rr) => {
-        axios.get('http://192.168.0.106:5000/patient/rr/',{
+    const filterByRr = async (rr) => {
+        setLoading(true);
+        await axios.get('http://192.168.0.106:5000/patient/rr/',{
             rr
         }).then((res)=> console.log(res.data));
+        setLoading(false);
     }
 
-    const filterByDate = (date) => {
-        axios.get('http://192.168.0.106:5000/patient/doa/',{
+    const filterByDate = async (date) => {
+        setLoading(true);
+        await axios.get('http://192.168.0.106:5000/patient/doa/',{
             date
         }).then((res)=> console.log(res.data));
+        setLoading(false);
     }
 
     const [showModal, setShowModal] = props.modalState;
