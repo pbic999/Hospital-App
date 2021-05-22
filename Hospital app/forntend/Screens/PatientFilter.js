@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import FiltersScrollbar from './FitersScrollbar';
-import PatientListScreen from './PatientListScreen';
-import FiltersScreen from './FitersScreen';
+import FiltersScrollbar from '../screens/FitersScrollbar';
+import PatientListScreen from '../screens/PatientListScreen';
+import FiltersScreen from '../screens/FitersScreen';
 
 
 const PatientFilter = () => {

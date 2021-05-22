@@ -5,27 +5,12 @@ import { Button,  } from 'react-native-paper';
 
 const PatientEntryForm = () => {
 
-    const [s_no, setS_no] = useState();
-    const [patient_name, setPatient_name] = useState();
-    const [ward_name, setWard_name] = useState();
-    const [UHID, setUHID] = useState();
-    const [hospital_no, setHospital_no] = useState();
-    const [bed, setbed] = useState();
-    const [age, setAge] = useState();
-    const [sex, setSex] = useState();
-    const [pr, setPr] = useState();
-    const [bp, setBp] = useState();
-    const [rr, setRr] = useState();
-    const [spo2,setSpo2] = useState();
-    const [o2_niv_mv, setO2_niv_mv] = useState();
-    const [o2_niv_mv_level, setO2_niv_mv_level] = useState();
-    const [freshComplaints, setFreshComplaints] = useState();
-    const [dutyDoctors,setDutyDoctors] = useState();
     const [s_no, setS_no] = useState('');
     const [patient_name, setPatient_name] = useState('');
     const [ward_name, setWard_name] = useState('');
     const [UHID, setUHID] = useState('');
     const [hospital_no, setHospital_no] = useState('');
+    const [bed, setBed] = useState('');
     const [doa, setDoa] = useState('');
     const [age, setAge] = useState('');
     const [sex, setSex] = useState('');
@@ -84,6 +69,10 @@ const PatientEntryForm = () => {
         }
         if (isNaN(hospital_no)) {
             alert('Hospital no. must be a number!');
+            return false;
+        }
+        if (!bed.trim()) {
+            alert('Please Enter Bed Type!');
             return false;
         }
         if (!doa.trim()) {

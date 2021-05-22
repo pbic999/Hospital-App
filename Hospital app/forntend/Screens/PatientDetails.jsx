@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { StyleSheet,TextInput, Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
 
 const PatientDetails = () => {
+
     const [patientDetails,setPatientDetails] = useState({})
     const [ward_name, setWard_name] = useState();
     const [doa, setDoa] = useState();
@@ -13,9 +14,95 @@ const PatientDetails = () => {
     const [o2_niv_mv_level, setO2_niv_mv_level] = useState();
     const [freshComplaints, setFreshComplaints] = useState();
     const [dutyDoctors,setDutyDoctors] = useState();
-    const [age,setAge] = useState()
-    const [bed,setBed] = useState()
-    const [editable,setEditable] = useState(false)
+    const [age,setAge] = useState();
+    const [bed,setBed] = useState();
+    const [editable,setEditable] = useState(false);
+
+    // const verfiyBp = (bp) => {
+    //     var bp_regex = /^\d{1,3}\/\d{1,3}$/;
+    //     if (bp.match(bp_regex)) {
+    //         return true;
+    //     } else {
+    //         alert('BP must be of form (systolic/diastolic)!');
+    //         return false;
+    //     }
+    // }
+
+    // const checkTextInput = () => {
+
+        
+    //     //Check for the Duty Doctor TextInput
+    //     if (!dutyDoctors.trim()) {
+    //         alert('Please Enter Duty Doctor Name');
+    //         return false;
+    //       }
+    //     //Check for the Ward Name TextInput
+    //     if (!ward_name.trim()) {
+    //       alert('Please Enter Ward Name');
+    //       return false;
+    //     }
+    //     if (!bed.trim()) {
+    //         alert('Please Enter Bed Type!');
+    //         return false;
+    //     }
+    //     if (!doa.trim()) {
+    //         alert('Please Enter DOA');
+    //         return false;
+    //     }
+    //     if (!age.trim()) {
+    //         alert('Please Enter Age');
+    //         return false;
+    //     }
+    //     if (isNaN(age)) {
+    //         alert('Age must be a number!');
+    //         return false;
+    //     }
+    //     if (!pr.trim()) {
+    //         alert('Please Enter PR');
+    //         return false;
+    //     }
+    //     if (isNaN(pr)) {
+    //         alert('PR must be a number!');
+    //         return false;
+    //     }
+    //     if (!bp.trim()) {
+    //         alert('Please Enter BP!');
+    //         return false;
+    //     }
+    //     if (!verfiyBp(bp)) {
+    //         return false
+    //     }
+    //     if (!rr.trim()) {
+    //         alert('Please Enter RR');
+    //         return false;
+    //     }
+    //     if (isNaN(rr)) {
+    //         alert('RR must be a number!');
+    //         return false;
+    //     }
+    //     if (!spo2.trim()) {
+    //         alert('Please Enter SPO2');
+    //         return false;
+    //     }
+    //     if (!o2_niv_mv.trim()) {
+    //         alert('Please Enter O2 NIV MV');
+    //         return false;
+    //     }
+    //     if (!o2_niv_mv_level.trim()) {
+    //         alert('Please Enter O2NRBM in L');
+    //         return false;
+    //     }
+    //     if (!freshComplaints.trim()) {
+    //         alert('Please Enter COMORBID complaints');
+    //         return false;
+    //     }
+        
+    //     //Checked Successfully
+    //     //Do whatever you want
+    //     return true;
+    // };
+
+
     useEffect(()=> {
         setPatientDetails({
             s_no: '1',
@@ -38,6 +125,7 @@ const PatientDetails = () => {
 
     const buttonHandler = () => {
         if(editable) {
+            if (!checkTextInput()) return;
             console.log('data updated');
         }
         setEditable(!editable)
