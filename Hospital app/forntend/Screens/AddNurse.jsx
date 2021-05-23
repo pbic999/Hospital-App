@@ -16,14 +16,27 @@ const AddNurse = () => {
         var phoneno = /^\d{10}$/;
 
         if (mobile_no.match(phoneno)) {
+<<<<<<< HEAD
             if (parseInt(mobile_no[0]) > 5) {
                 return true
+=======
+            if (mobile_no[0] > '5') {
+                return true;
+            } else {
+                alert('invalid mobile number!');
+                return false;
+>>>>>>> 9985279c8414b7e94ca73161e89f1a6ef524f21f
             }
             else {
                 return false
             }
         } else {
+<<<<<<< HEAD
             return false
+=======
+            alert("invalid mobile number!");
+            return false;
+>>>>>>> 9985279c8414b7e94ca73161e89f1a6ef524f21f
         }
     }
 
@@ -80,8 +93,18 @@ const AddNurse = () => {
             gender,
             password,
             role: 'nurse'
+<<<<<<< HEAD
         }).then((res) => {setLoading(false); alert('Nurse added successfully!'); })
         .catch((err) => {setLoading(false); alert('Moblie no already used. Please try with another no.')})
+=======
+        }).then((res) => console.log(res.data))
+        .catch((err) => console.log('user already exist'));
+
+        setName('');
+        setMobile_no('');
+        setGender('');
+        setPassword('');
+>>>>>>> 9985279c8414b7e94ca73161e89f1a6ef524f21f
     }
 
     return (

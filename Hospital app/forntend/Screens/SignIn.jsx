@@ -10,11 +10,15 @@ const SignIn = () => {
     const [loading,setLoading] = useState();
 
     const verfiyMobileNumber = () => {
+        
         var phoneno = /^\d{10}$/;
 
         if (mobile_no.match(phoneno)) {
             if (mobile_no[0] > '5') {
-                return true
+                return true;
+            } else {
+                alert("invalid mobile number!");
+                return false;
             }
         } else {
             alert("invalid mobile number!");

@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { SearchBar } from 'react-native-elements';
+<<<<<<< HEAD:Hospital app/forntend/screens/PatientFilter.js
 import FiltersScrollbar from './FitersScrollbar';
 import PatientListScreen from './PatientListScreen';
 import FiltersScreen from './FitersScreen';
 import { TextInput } from 'react-native-paper';
 import { Input } from 'react-native-elements/dist/input/Input';
+=======
+import FiltersScrollbar from '../screens/FitersScrollbar';
+import PatientListScreen from '../screens/PatientListScreen';
+import FiltersScreen from '../screens/FitersScreen';
+>>>>>>> 9985279c8414b7e94ca73161e89f1a6ef524f21f:Hospital app/forntend/Screens/PatientFilter.js
 
 
 const PatientFilter = () => {
