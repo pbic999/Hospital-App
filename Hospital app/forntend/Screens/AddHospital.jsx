@@ -2,6 +2,7 @@ import { useState } from "react"
 import { StyleSheet, Image, TextInput, Text, View, Keyboard, ScrollView } from "react-native";
 import React from 'react'
 import axios from "axios";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const AddHospital = () => {
     const [hospital_name,setHospital_name] = useState();
@@ -12,9 +13,10 @@ const AddHospital = () => {
     const [designation,setDesignation] = useState()
     const [qualification,setQualification] = useState()
     const [password,setPassword] = useState()
-    const [loading,setLoading] = useState(false);
+    const [loading,setLoading] = useState(false)
 
     const submitHandler = (e) => {
+        setLoading(true)
         axios.post('http://192.168.0.106:5000/user/add/admin',{
                 hospital_name, 
                 branch,
@@ -24,13 +26,18 @@ const AddHospital = () => {
                 designation,
                 qualification,
                 password
-            }).then((res)=> console.log(res.data)).catch((err)=> console.log(err))
+            }).then((res)=> {setLoading(false)})
+            .catch((err)=> {alert(err); setLoading(false)})
         console.log('request sended to server');
     }
 
     return (
+
         <View style={styles.container}>
             <View style={styles.form}>
+            <Spinner
+          visible={loading}
+          textContent={'Loading...'} />
             <ScrollView>
             <Text style={styles.title}>Hospital details:</Text>
                 <TextInput onChangeText={val => setHospital_name(val)}
@@ -73,7 +80,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#a2a2a2',
         fontSize: 20,
-        lineHeight: 30,
         padding: 10
     },
     forget_password: {

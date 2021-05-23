@@ -10,7 +10,7 @@ patientRouter.post('/add', async (req,res) => {
         const patient = await patientModel.findOne({UHID: patient_details.UHID})
         const date = new Date()
         const timestamp = `${date.toLocaleDateString().split('/').join('-')} ${date.getHours()}-${date.getMinutes()}`
-        const doa = date.toLocaleDateString().split('/').join('-')
+        const doa = date.toLocaleDateString()
         if(patient) res.send('patient already exist.')
         else {
         const newData = new patientModel({...patient_details,doa})
@@ -49,15 +49,12 @@ patientRouter.post('/add/record', async (req,res)=> {
         const {UHID,hospital_id,...record} = req.body
         const date = new Date()
         const timestamp = `${date.toLocaleDateString().split('/').join('-')} ${date.getHours()}-${date.getMinutes()}`
-        const doa = date.toLocaleDateString().split('/').join('-')
         await patientRecordModel.findOneAndUpdate(
-            {$and:[{ UHID,hospital_id }]},{$push: {record: {...record,timestamp,doa}}});
-        const {ward_name,bed,pr,bp,rr,spo2,o2_niv_mv
+            {$and:[{ UHID,hospital_id }]},{$push: {record: {...record,timestamp}}});
+        const {ward_name,bed,pr,bp,rr,spo2,o2_niv_mv,doa,age
             ,complaints,o2_niv_mv_level,duty_doctor,duty_nurse} = record
-        await patientModel.findOneAndUpdate({$and:[{ UHID,hospital_id }]},{$set: {
-            ward_name,doa,bp,rr,pr,spo2,o2_niv_mv,o2_niv_mv_level,complaints,duty_doctor,duty_nurse,bed
-        }})
-        res.send('updated successfully')
+        const updatedData = await patientModel.findOneAndUpdate({$and:[{ UHID,hospital_id }]},{$set: {...record}})
+        res.send(updatedData)
     }
     catch(err) {
         res.status(500).send(err)
@@ -65,27 +62,26 @@ patientRouter.post('/add/record', async (req,res)=> {
     }
 })
 
-/*patientRouter.get('/UHID/:UHID/:hospital_id:', async (req,res) => {
+patientRouter.get('/UHID/:UHID/:hospital_id', async (req,res) => {
     try {
         const UHID = req.params.UHID
         const hospital_id = req.params.hospital_id
-        const patients = await patientModel.findOne({$and:{ UHID,hospital_id }})
+        const patients = await patientModel.findOne({ UHID,hospital_id })
         res.status(200).send(patients)
     }
     catch (err) {
         res.status(500).send(err)
         console.log(err);
     }
-})*/
+})
 
 
 //correct
-patientRouter.get('/UHIDOrName/:UHIDOrName/:hospital_id', async (req,res) => {
+/*patientRouter.get('/Name/:Name/:hospital_id', async (req,res) => {
     try {
-        const UHIDOrName = req.params.UHIDOrName
+        const name = req.params.Name
         const hospital_id = req.params.hospital_id
-        const patient = await patientModel.find({$and:[{hospital_id},
-            {$or:[{UHID:UHIDOrName},{patient_name:`/.*${UHIDOrName}.*/`}]}]})
+        const patient = await patientModel.find({patient_name:`/${name} /`,hospital_id})
         res.status(200).send(patient)
     }
     catch (err) {
@@ -176,12 +172,11 @@ patientRouter.get('/spo2/:spo2/:hospital_id', async (req,res) => {
 })
 
 
-//correct
 patientRouter.get('/duty_doctor/:doctor/:hospital_id', async (req,res) => {
     try {
         const duty_doctor = req.params.doctor
         const hospital_id = req.params.hospital_id
-        const patients = await patientModel.find({$and:[{ duty_doctor: `/.*${duty_doctor}*/`,hospital_id }]})
+        const patients = await patientModel.find({$and:[{ duty_doctor: `/${duty_doctor}* /`,hospital_id }]})
         res.status(200).send(patients)
     }
     catch (err) {
@@ -191,7 +186,6 @@ patientRouter.get('/duty_doctor/:doctor/:hospital_id', async (req,res) => {
 })
 
 
-//correct
 patientRouter.get('/ward/:ward/:hospital_id', async (req,res) => {
     try {
         const ward = req.params.ward
@@ -205,7 +199,7 @@ patientRouter.get('/ward/:ward/:hospital_id', async (req,res) => {
     }
 })
 
-//correct
+
 patientRouter.get('/get/record/:UHID/:date/:hospital_id', async (req,res) => {
     try{
         const UHID =  req.params.UHID
@@ -218,6 +212,25 @@ patientRouter.get('/get/record/:UHID/:date/:hospital_id', async (req,res) => {
     catch(err) {
         res.status(500).send(err)
     }
+}) */
+
+patientRouter.post('/filter', async (req,res) => {
+    try{
+    const {duty_doctor,ward,patient_name,bpsys,bpdis,doa,UHID
+        ,spo2,pr,o2_niv_mv,o2_niv_mv_level,rr,complaints,no} = req.body
+    const patient = await patientModel.find({$or: [{duty_doctor},
+    {ward_name: ward},{patient_name},{bp: `/${bpsys}/${bpdis}/`},
+    {doa},{UHID},{spo2},{pr},
+    {o2_niv_mv},{o2_niv_mv_level},
+    {rr},{complaints}
+    ]}).limit(20).skip(no*20)
+    res.status(200).send(patient)
+    console.log(req.body);
+    }
+    catch (err) {
+        res.status(500).send(err)
+    }
 })
+
 
 export default patientRouter

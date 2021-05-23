@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const patientSchema = mongoose.Schema({
     s_no: {
-        type: Number,
+        type: String,
         require: true
     },
     ward_name: {
@@ -15,7 +15,7 @@ const patientSchema = mongoose.Schema({
         unique: true
     },
     hospital_no: {
-        type: Number,
+        type: String,
         require: true,
         unique: true
     },
@@ -28,7 +28,7 @@ const patientSchema = mongoose.Schema({
         require: true
     },
     age: {
-        type: Number,
+        type: String,
         require: true
     },
     sex: {
@@ -36,7 +36,7 @@ const patientSchema = mongoose.Schema({
         require: true
     },
     pr: {
-        type: Number,
+        type: String,
         require: true
     },
     bp: {
@@ -44,11 +44,11 @@ const patientSchema = mongoose.Schema({
         require: true
     },
     rr: {
-        type: Number,
+        type: String,
         require: true
     },
     spo2: {
-        type: Number,
+        type: String,
         require: true
     },
     o2_niv_mv: {
@@ -56,14 +56,14 @@ const patientSchema = mongoose.Schema({
         require: true
     },
     complaints: {
-        type: Array,
+        type: String,
     },
     o2_niv_mv_level: {
         type: String,
     },
     bed: String,
-    duty_doctor: Array,
-    duty_nurse: Array,
+    duty_doctor: String,
+    duty_nurse: String,
     hospital_id: String
 })
 

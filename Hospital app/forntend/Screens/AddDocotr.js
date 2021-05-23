@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { StyleSheet,TextInput, Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const AddDocotr = () => {
 
@@ -10,6 +11,7 @@ const AddDocotr = () => {
     const [designation,setDesignation] = useState('');
     const [qualification,setQualification] = useState('');
     const [password,setPassword] = useState('');
+    const [loading,setLoading] = useState(false)
 
     const styles = StyleSheet.create({
         title: {
@@ -22,7 +24,6 @@ const AddDocotr = () => {
             borderColor: '#a2a2a2',
             borderRadius: 5,
             fontSize: 20,
-            lineHeight: 30,
             padding: 10
         },
         submitButton: {
@@ -109,6 +110,7 @@ const AddDocotr = () => {
 
     const submitHandler = () => {
         if(checkTextInput() === false) return;
+        setLoading(true)
         axios.post('http://192.168.0.106:5000/user/add',{
             name,
             mobile_no,
@@ -117,12 +119,17 @@ const AddDocotr = () => {
             qualification,
             password,
             role: 'doctor'
-        }).then((res) => {console.log(res.data);alert("Doctor successfully added!");})
-        .catch((err) => {console.log('user already exist');alert('user already exists')});
+        }).then((res) => {alert("Doctor successfully added!");setLoading(false)})
+        .catch((err) => {alert('Moblie no already used. Please try with another no.');
+        setLoading(false)});
     }
 
     return (
+        
         <View style={styles.container}>
+            <Spinner
+          visible={loading}
+          textContent={'Loading...'} />
                     <StatusBar backgroundColor="#0481eb" />
                     <ScrollView>
                     <KeyboardAvoidingView>

@@ -1,32 +1,17 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { StyleSheet,TextInput, Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import { Button,  } from 'react-native-paper';
 
 const PatientEntryForm = () => {
 
-    const [s_no, setS_no] = useState();
-    const [patient_name, setPatient_name] = useState();
-    const [ward_name, setWard_name] = useState();
-    const [UHID, setUHID] = useState();
-    const [hospital_no, setHospital_no] = useState();
-    const [bed, setbed] = useState();
-    const [age, setAge] = useState();
-    const [sex, setSex] = useState();
-    const [pr, setPr] = useState();
-    const [bp, setBp] = useState();
-    const [rr, setRr] = useState();
-    const [spo2,setSpo2] = useState();
-    const [o2_niv_mv, setO2_niv_mv] = useState();
-    const [o2_niv_mv_level, setO2_niv_mv_level] = useState();
-    const [freshComplaints, setFreshComplaints] = useState();
-    const [dutyDoctors,setDutyDoctors] = useState();
     const [s_no, setS_no] = useState('');
     const [patient_name, setPatient_name] = useState('');
     const [ward_name, setWard_name] = useState('');
     const [UHID, setUHID] = useState('');
     const [hospital_no, setHospital_no] = useState('');
-    const [doa, setDoa] = useState('');
+    const [bed, setbed] = useState('');
     const [age, setAge] = useState('');
     const [sex, setSex] = useState('');
     const [pr, setPr] = useState('');
@@ -35,18 +20,10 @@ const PatientEntryForm = () => {
     const [spo2,setSpo2] = useState('');
     const [o2_niv_mv, setO2_niv_mv] = useState('');
     const [o2_niv_mv_level, setO2_niv_mv_level] = useState('');
-    const [freshComplaints, setFreshComplaints] = useState('');
-    const [dutyDoctors,setDutyDoctors] = useState('');
-
-    const verfiyBp = (bp) => {
-        var bp_regex = /^\d{1,3}\/\d{1,3}$/;
-        if (bp.match(bp_regex)) {
-            return true;
-        } else {
-            alert('BP must be of form (systolic/diastolic)!');
-            return false;
-        }
-    }
+    const [complaints, setcomplaints] = useState('');
+    const [duty_doctor,setduty_doctor] = useState('');
+    const hospital_id = '1'
+    const [loading,setLoading] = useState(false)
 
     const checkTextInput = () => {
         //Check for the s.no TextInput
@@ -60,7 +37,7 @@ const PatientEntryForm = () => {
           return false;
         }
         //Check for the Duty Doctor TextInput
-        if (!dutyDoctors.trim()) {
+        if (!duty_doctor.trim()) {
             alert('Please Enter Duty Doctor Name');
             return false;
           }
@@ -86,8 +63,8 @@ const PatientEntryForm = () => {
             alert('Hospital no. must be a number!');
             return false;
         }
-        if (!doa.trim()) {
-            alert('Please Enter DOA');
+        if (!bed.trim()) {
+            alert('Please Enter Bed type');
             return false;
         }
         if (!age.trim()) {
@@ -102,45 +79,6 @@ const PatientEntryForm = () => {
             alert('Please fill the Sex field');
             return false;
         }
-        if (!pr.trim()) {
-            alert('Please Enter PR');
-            return false;
-        }
-        if (isNaN(pr)) {
-            alert('PR must be a number!');
-            return false;
-        }
-        if (!bp.trim()) {
-            alert('Please Enter BP!');
-            return false;
-        }
-        if (!verfiyBp(bp)) {
-            return false
-        }
-        if (!rr.trim()) {
-            alert('Please Enter RR');
-            return false;
-        }
-        if (isNaN(rr)) {
-            alert('RR must be a number!');
-            return false;
-        }
-        if (!spo2.trim()) {
-            alert('Please Enter SPO2');
-            return false;
-        }
-        if (!o2_niv_mv.trim()) {
-            alert('Please Enter O2 NIV MV');
-            return false;
-        }
-        if (!o2_niv_mv_level.trim()) {
-            alert('Please Enter O2NRBM in L');
-            return false;
-        }
-        if (!freshComplaints.trim()) {
-            alert('Please Enter COMORBID complaints');
-            return false;
-        }
         
         //Checked Successfully
         //Do whatever you want
@@ -149,9 +87,7 @@ const PatientEntryForm = () => {
 
     const handleSubmit = () => {
         if (!checkTextInput()) return;
-        const duty_doctor = dutyDoctors.split(',');
-        const complaints = freshComplaints.split(',');
-        
+        setLoading(true)
         axios.post('http://192.168.0.106:5000/patient/add',{
             patient_name,
             s_no,
@@ -168,16 +104,18 @@ const PatientEntryForm = () => {
             o2_niv_mv,
             o2_niv_mv_level,
             complaints,
-            duty_doctor
-        }).then((res)=> console.log(res.data))
+            duty_doctor,
+            hospital_id
+        }).then((res)=> {console.log(res.data);alert('Patient successfully added!');setLoading(false)})
+        .catch ((err) => {alert('UHID already used. Please use different UHID'); setLoading(false)})
 
         setS_no('');
         setPatient_name('');
-        setDutyDoctors('');
+        setduty_doctor('');
         setWard_name('');
         setUHID('');
         setHospital_no('');
-        setDoa('');
+        setbed('');
         setAge('');
         setSex('');
         setPr('');
@@ -186,13 +124,16 @@ const PatientEntryForm = () => {
         setSpo2('');
         setO2_niv_mv('');
         setO2_niv_mv_level('');
-        setFreshComplaints(''); 
+        setcomplaints(''); 
     }
 
     return(
 
         <>
             <View style={styles.container}>
+            <Spinner
+          visible={loading}
+          textContent={'Loading...'} /> 
             <ScrollView>
                     <StatusBar backgroundColor="#0481eb" />
                     
@@ -212,14 +153,14 @@ const PatientEntryForm = () => {
                         onChangeText={(text)=>setPatient_name(text)}
                     />
                     <TextInput 
-                        placeholder='Duty Doctors'
-                        value={dutyDoctors}
+                        placeholder='Duty Doctors (e.g. Doctor1, Doctor2,..)'
+                        value={duty_doctor}
                         theme={{colors:{primary: "#0481eb"}}} 
                         style={styles.textInput}
-                        onChangeText={(text)=>setDutyDoctors(text)}
+                        onChangeText={(text)=>setduty_doctor(text)}
                     />
                     <View style={styles.smallFieldsContainer}>
-                    <TextInput 
+                    <TextInput  
                         placeholder='Name of Ward'
                         value={ward_name}
                         theme={{colors:{primary: "#0481eb"}}}
@@ -303,10 +244,10 @@ const PatientEntryForm = () => {
                         style={styles.smallTextInput} />
                     </View>
                     <TextInput
-                    value={freshComplaints}
+                    value={complaints}
                         placeholder='Fresh Complaints'
                         theme={{colors:{primary: "#0481eb"}}}
-                        onChangeText={(text)=>setFreshComplaints(text)}
+                        onChangeText={(text)=>setcomplaints(text)}
                         style={styles.textInput} />
                     <Text style={styles.submitButton} onPress={handleSubmit}> Submit </Text>
             </ScrollView>
@@ -334,7 +275,6 @@ const styles = StyleSheet.create({
         borderColor: '#a2a2a2',
         borderRadius: 5,
         fontSize: 20,
-        lineHeight: 30,
         padding: 8
     },
     smallFieldsContainer: {
@@ -347,7 +287,6 @@ const styles = StyleSheet.create({
         borderColor: '#a2a2a2',
         borderRadius: 5,
         fontSize: 20,
-        lineHeight: 30,
         padding: 8
     },
     submitButton: {

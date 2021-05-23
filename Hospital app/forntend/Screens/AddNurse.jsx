@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, Text, View,
      StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const AddNurse = () => {
 
@@ -9,16 +10,19 @@ const AddNurse = () => {
     const [mobile_no,setMobile_no] = useState('');
     const [gender,setGender] = useState('');
     const [password,setPassword] = useState('');
+    const [loading,setLoading] = useState(false)
 
     const verfiyMobileNumber = () => {
         var phoneno = /^\d{10}$/;
 
         if (mobile_no.match(phoneno)) {
-            if (mobile_no[0] > '5') {
+            if (parseInt(mobile_no[0]) > 5) {
                 return true
             }
+            else {
+                return false
+            }
         } else {
-            alert("invalid mobile number!");
             return false
         }
     }
@@ -46,6 +50,8 @@ const AddNurse = () => {
           return false;
         }
         if (!verfiyMobileNumber()) {
+            console.log('po');
+            alert("invalid mobile number!");
             return false;
         }
         //Check for the Gender TextInput
@@ -66,18 +72,24 @@ const AddNurse = () => {
     };
 
     const submitHandler = () => {
+        if(checkTextInput())
+        setLoading(true)
         axios.post('http://192.168.0.106:5000/user/add',{
             name,
             mobile_no,
             gender,
             password,
             role: 'nurse'
-        }).then((res) => console.log(res.data))
-        .catch((err) => console.log('user already exist'))
+        }).then((res) => {setLoading(false); alert('Nurse added successfully!'); })
+        .catch((err) => {setLoading(false); alert('Moblie no already used. Please try with another no.')})
     }
 
     return (
         <View style={styles.container}>
+            <Spinner
+          visible={loading}
+          textContent={'Loading...'}
+        />
                     <StatusBar backgroundColor="#0481eb" />
                     <ScrollView style={{height:'100%'}}>
                     <KeyboardAvoidingView style={{height:'100%'}}>
@@ -129,7 +141,6 @@ const styles = StyleSheet.create({
         borderColor: '#a2a2a2',
         borderRadius: 5,
         fontSize: 20,
-        lineHeight: 30,
         padding: 10
     },
     submitButton: {

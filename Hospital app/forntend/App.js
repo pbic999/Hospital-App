@@ -10,6 +10,7 @@ import AddDocotr from './Screens/AddDocotr.js';
 import AddNurse from './Screens/AddNurse.jsx';
 import AddHospital from './Screens/AddHospital.jsx';
 import WardsStatusScreen from './Screens/WardsStatusScreen';
+import FiltersScreen from './Screens/FitersScreen.js';
 
 const Drawer = createDrawerNavigator();
 
@@ -31,6 +32,7 @@ export default function App() {
               <Drawer.Screen name="SignIn" component={SignIn} />
               <Drawer.Screen name="Add hospital" component={AddHospital} />
               <Drawer.Screen name="Wards Status" component={WardsStatusScreen} />
+              <Drawer.Screen name="Apply" component={FiltersScreen} />
             </Drawer.Navigator>
           </NavigationContainer>
         </>

@@ -4,6 +4,8 @@ import { SearchBar } from 'react-native-elements';
 import FiltersScrollbar from './FitersScrollbar';
 import PatientListScreen from './PatientListScreen';
 import FiltersScreen from './FitersScreen';
+import { TextInput } from 'react-native-paper';
+import { Input } from 'react-native-elements/dist/input/Input';
 
 
 const PatientFilter = () => {
@@ -71,19 +73,7 @@ const PatientFilter = () => {
 
     return(
         <View style={styles.filterContainer}>
-            <SearchBar
-                placeholder="UHID or Name"
-                onChangeText={setSearch}
-                value={serach}
-                containerStyle={styles.searchBar}
-                inputContainerStyle={{backgroundColor: '#fff'}}
-                inputStyle={{color: '#0481eb'}}
-            />
-            <FiltersScreen modalState={[showModal, setShowModal]} filterStates = {filterStates} patientListState={[patientList, setPatientList]}  loadingState={[loading, setLoading]} />
-            <View style={{padding: 10}}>
-                <FiltersScrollbar modalState={[showModal, setShowModal]}  filterStates = {filterStates} />
-            </View>
-            <PatientListScreen patientList={patientList} loadingState={[loading]} />
+            <Input placeholder='khhg'/>
         </View>
     );
 

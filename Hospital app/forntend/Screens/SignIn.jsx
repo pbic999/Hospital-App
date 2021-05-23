@@ -2,10 +2,12 @@ import { useState } from "react"
 import { StyleSheet, Image, TextInput, Text, View, Keyboard } from "react-native";
 import React from 'react'
 import axios from "axios";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const SignIn = () => {
     const [mobile_no,setMobile_no] = useState();
     const [password,setPassword] = useState();
+    const [loading,setLoading] = useState();
 
     const verfiyMobileNumber = () => {
         var phoneno = /^\d{10}$/;
@@ -41,10 +43,6 @@ const SignIn = () => {
             return false;
         }
         //Check for the Gender TextInput
-        if (!gender.trim()) {
-            alert('Please Enter gender');
-            return false;
-        }
         if (!password.trim()) {
             alert('Please Enter password');
             return false;
@@ -58,12 +56,19 @@ const SignIn = () => {
     };
 
     const submitHandler = (e) => {
+        if(checkTextInput()) {
+            setLoading(true)
         axios.post('http://192.168.0.106:5000/user/signin',{mobile_no,password})
-        .then((res)=> console.log(res.data))
+        .then((res)=> setLoading(false))
+        .catch((err)=> {alert('Invalid username or password!'); setLoading(false)})
+    }
     }
 
     return (
         <View style={styles.container}>
+            <Spinner
+          visible={loading}
+          textContent={'Loading...'} />
             <View style={styles.form}>
                 <TextInput onChangeText={val => setMobile_no(val)} 
                 style={styles.input} placeholder='Mobile no.' />
@@ -88,7 +93,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#a2a2a2',
         fontSize: 20,
-        lineHeight: 30,
         padding: 10
     },
     forget_password: {

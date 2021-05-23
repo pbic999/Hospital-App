@@ -9,7 +9,7 @@ userRouter.post('/add', async (req,res) => {
         const details = req.body
         const checkDoctor = await userModel.findOne({mobile_no: details.mobile_no})
         if(checkDoctor){
-            res.send('User Already exist')
+            res.status(400).send('User Already exist')
         }
         else {
             const newDoctor = new userModel(details)
@@ -29,7 +29,7 @@ userRouter.post('/signin', async (req,res) => {
         console.log(req.body);
         const user = await userModel.findOne({mobile_no,password})
         if(user) res.status(200).send(user)
-        else res.send('Invalid password or username')
+        else res.status(400).send('Invalid password or username')
     }
     catch (err) {
         res.status(500).send(err);
