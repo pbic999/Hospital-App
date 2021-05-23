@@ -2,13 +2,16 @@ import axios from 'axios';
 import React, { useState,useEffect } from 'react';
 import { StyleSheet,TextInput, Text, View, StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay'
+import { MaterialIcons } from '@expo/vector-icons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const PatientDetails = () => {
     const [patientDetails,setPatientDetails] = useState()
     const [ward_name, setWard_name] = useState('');
-    const [doa, setDoa] = useState('');
+    const [doa, setDoa] = useState(new Date());
     const [pr, setPr] = useState('');
-    const [bp, setBp] = useState('');
+    const [bpsys, setBpSys] = useState('');
+    const [bpdis, setBpDis] = useState('');
     const [rr, setRr] = useState('');
     const [spo2,setSpo2] = useState('');
     const [o2_niv_mv, setO2_niv_mv] = useState('');
@@ -21,8 +24,10 @@ const PatientDetails = () => {
     const [loading,setLoading] = useState(true)
     const [editable,setEditable] = useState(false)
     const [fetchData,setFetchData] = useState(false)
+    const [status,setStatus] = useState('')
+
     useEffect(()=> {
-        axios.get(`http://192.168.0.106:5000/patient/UHID/52663773/1`).then(
+        axios.get(`http://192.168.0.106:5000/patient/UHID/12526462/1`).then(
             (res)=> {setPatientDetails(res.data)
                 console.log(res.data);
                 setLoading(false)
@@ -50,9 +55,10 @@ const PatientDetails = () => {
 
     const setBlankStates = () => {
         setWard_name('')
-        setDoa('')
+        setDoa(new Date())
         setPr('')
-        setBp('')
+        setBpSys('')
+        setBpDis('')
         setRr('')
         setSpo2('')
         setO2_niv_mv('')
@@ -61,6 +67,7 @@ const PatientDetails = () => {
         setDutyDoctor('')
         setAge('')
         setBed('')
+        setStatus('')
     }
 
     const buttonHandler = () => {
@@ -68,8 +75,8 @@ const PatientDetails = () => {
             setLoading(true)
             console.log('data updated');
             axios.post('http://192.168.0.106:5000/patient/add/record',{
-                ward_name,pr,bp,spo2,o2_niv_mv,o2_niv_mv_level,complaints,UHID: patientDetails.UHID,
-                doa: doa,age,duty_doctor,bed,rr,hospital_id:'1'
+                ward_name,pr,bpsys,bpdis,spo2,o2_niv_mv,o2_niv_mv_level,complaints,UHID: patientDetails.UHID,
+                doa: doa.toLocaleDateString(),age,duty_doctor,bed,rr,hospital_id:'1',status
             }).then((res) => {setPatientDetails(res.data) ;alert('Data successfully uploaded!')
                  setFetchData(true); setLoading(false)})
             .catch((err) => {console.log(err); alert('Sorry, your request failed!')})
@@ -128,6 +135,18 @@ const PatientDetails = () => {
         }
     });
 
+    const [show, setShow] = useState(false);
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || doa;
+        console.log(currentDate);
+        setShow(false);
+        setDoa(currentDate);
+    };
+
+    const showDatepicker = () => {
+        setShow(true);
+    }
+
     return(
 
         <>
@@ -158,13 +177,14 @@ const PatientDetails = () => {
                     />
                     </View>
                     <View style={styles.smallFieldsContainer}>
-                        <View style={{marginTop: 10,flex: 1}}>
-                        <Text style={{fontSize: 12}}> Ward: </Text>
+                    <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> Hospital no.: </Text>
                         <TextInput 
-                            value={editable? ward_name : patientDetails.ward_name}
-                            onChangeText = {val => setWard_name(val)}
-                            style={styles.smallTextInput} editable = {editable}/>
-                        </View>
+                            value={patientDetails.hospital_no}
+                            style={styles.smallTextInput} 
+                            editable = {false}
+                        />
+                    </View>
                         <View style={{marginTop: 10,flex: 1}}>
                         <Text style={{fontSize: 12}}> UHID: </Text>
                         <TextInput 
@@ -187,14 +207,34 @@ const PatientDetails = () => {
                     </View>
                     <View style={{marginTop: 10,flex: 1}}>
                     <Text style={{fontSize: 12}}> DOA(dd/mm/yyyy): </Text>
-                        <TextInput 
-                            value={editable ? doa : patientDetails.doa}
-                            onChangeText = {val => setDoa(val)}
-                            style={styles.smallTextInput}
-                            editable = {editable}
-                            onChangeText={(text) => setDoa(text)}
-                        />
+                    <View style={{flexDirection: 'row', flex:1,justifyContent:'center',
+                        borderWidth: 1, borderColor: '#a2a2a2', borderRadius: 5}}
+                    >
+                        <TextInput style={{flex: 1, padding: 8,
+                                fontSize: 20}}
+                                value={doa ? doa.toLocaleDateString() : null}
+                         placeholder='DOA' editable={false}/>
+                        <View style={{marginTop: 10}}>
+                            <MaterialIcons onPress={showDatepicker}
+                             name="date-range" size={30} color="#0481eb" />
+                        </View>
+                        {editable && show && 
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={doa}
+                            mode={'date'}
+                            display="default"
+                            onChange={onChange}
+                        />}
+                    </View> 
                     </View>
+                    <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> Ward: </Text>
+                        <TextInput 
+                            value={editable? ward_name : patientDetails.ward_name}
+                            onChangeText = {val => setWard_name(val)}
+                            style={styles.smallTextInput} editable = {editable}/>
+                        </View>
                     </View>
                     <View style={styles.smallFieldsContainer}>
                     <View style={{marginTop: 10,flex: 1}}>
@@ -208,14 +248,6 @@ const PatientDetails = () => {
                         />
                     </View>
                     <View style={{marginTop: 10,flex: 1}}>
-                        <Text style={{fontSize: 12}}> Hospital no.: </Text>
-                        <TextInput 
-                            value={patientDetails.hospital_no}
-                            style={styles.smallTextInput} 
-                            editable = {false}
-                        />
-                    </View>
-                    <View style={{marginTop: 10,flex: 1}}>
                         <Text style={{fontSize: 12}}> Sex : </Text>
                         <TextInput 
                             value={patientDetails.sex}
@@ -223,10 +255,6 @@ const PatientDetails = () => {
                             editable = {false}
                         />
                     </View>
-                    </View>
-
-
-                    <View style={styles.smallFieldsContainer}>
                     <View style={{marginTop: 10,flex: 1}}>
                         <Text style={{fontSize: 12}}> PR: </Text>
                         <TextInput 
@@ -235,11 +263,23 @@ const PatientDetails = () => {
                             style={styles.smallTextInput} editable = {editable}
                         />
                     </View>
+                    </View>
+
+
+                    <View style={styles.smallFieldsContainer}>
                     <View style={{marginTop: 10,flex: 1}}>
-                        <Text style={{fontSize: 12}}> BP: </Text>
+                        <Text style={{fontSize: 12}}> BP(systolic): </Text>
                         <TextInput
-                            value={editable? bp : patientDetails.bp}
-                            onChangeText = {val => setBp(val)}
+                            value={editable? bpdis : patientDetails.bpdis}
+                            onChangeText = {val => setBpDis(val)}
+                            style={styles.smallTextInput}
+                            editable = {editable}/>
+                    </View>
+                    <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> BP(distolic): </Text>
+                        <TextInput
+                            value={editable? bpsys : patientDetails.bpsys}
+                            onChangeText = {val => setBpSys(val)}
                             style={styles.smallTextInput}
                             editable = {editable}/>
                     </View>
@@ -290,6 +330,14 @@ const PatientDetails = () => {
                         <TextInput 
                         onChangeText = {val => setFreshComplaints(val)}
                             value={editable? complaints :patientDetails.complaints}
+                            style={styles.smallTextInput} editable = {editable}
+                        />
+                    </View>
+                    <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12, color: 'black'}}> Patient current status: </Text>
+                        <TextInput 
+                        onChangeText = {val => setStatus(val)}
+                            value={editable? status :patientDetails.status}
                             style={styles.smallTextInput} editable = {editable}
                         />
                     </View>

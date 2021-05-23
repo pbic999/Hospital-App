@@ -39,9 +39,12 @@ const patientSchema = mongoose.Schema({
         type: String,
         require: true
     },
-    bp: {
+    bpsys: {
         type: String,
         require: true
+    },
+    bpdis: {
+        type: String
     },
     rr: {
         type: String,
@@ -64,7 +67,8 @@ const patientSchema = mongoose.Schema({
     bed: String,
     duty_doctor: String,
     duty_nurse: String,
-    hospital_id: String
+    hospital_id: String,
+    status: String
 })
 
 const patientModel = mongoose.model('patient',patientSchema)

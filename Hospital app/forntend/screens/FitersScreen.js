@@ -17,6 +17,8 @@ const FiltersScreen = () => {
     const [bpsys,setbpsys] = useState()
     const [bpdis,setbpdis] = useState()
     const [doa,setDoa] = useState()
+    const [date,setDate] = useState(new Date())
+    const [doaPass,setDoaPass] = useState(false)
     const [UHID,setUHID] = useState()
     const [spo2,setSpo2] = useState()
     const [pr,setPr] = useState()
@@ -32,10 +34,11 @@ const FiltersScreen = () => {
 
     const [show, setShow] = useState(false);
     const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate ;
-        console.log(currentDate);
+        const currentDate = selectedDate || date ;
+        console.log(doa);
         setShow(false);
-        setDoa(currentDate);
+        setDoa(currentDate.toLocaleDateString());
+        setDate(currentDate)
     };
 
     const showDatepicker = () => {
@@ -43,6 +46,7 @@ const FiltersScreen = () => {
     }
 
     const applyFilter = () => {
+        console.log(doa);
         axios.post('http://192.168.0.106:5000/patient/filter',{
             duty_doctor,ward,patient_name,bpsys,bpdis,doa,UHID
         ,spo2,pr,o2_niv_mv,o2_niv_mv_level,rr,complaints,no: 0
@@ -59,25 +63,39 @@ return(
             <Text style={styles.title}>
                 Filters :
             </Text>
+            <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> Duty doctors: </Text>
                 <TextInput style={styles.textInput}
                     value={duty_doctor}
                     onChangeText={(val)=> setDuty_doctor(val)}
                 placeholder='Doctor name' />
+                </View>
+                <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> Ward name: </Text>
                 <TextInput style={styles.textInput}
                     value={ward}
                     onChangeText={(val)=> setWard(val)}
                 placeholder='Ward name' />
+            </View>
+            <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> Patient name: </Text>
                  <TextInput style={styles.textInput}
                     value={patient_name}
                     onChangeText={(val)=> setPatient_name(val)}
                 placeholder='Patient Name' />
+            </View>
                 <View style={{flexDirection: 'row'}}>
+                <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> BP(Systolic): </Text>
                     <TextInput
                     value={bpsys}
                     onChangeText={(val)=> setbpsys(val)}
                     style={styles.textInput}
                         placeholder='BP (systolic)'
                     />
+                </View>
+                <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> BP(diastolic): </Text>
                     <TextInput
                     style={styles.textInput}
                     value={bpdis}
@@ -85,45 +103,44 @@ return(
                         placeholder='BP (diastolic)'
                     />
                 </View>
+                </View>
                 <View style={{flexDirection:'row', marginTop: 10}}>
-                    <View style={{flexDirection: 'row', flex:1,marginTop: 10,justifyContent:'center',
+                <View style={{flex: 1}}>
+                        <Text style={{fontSize: 12}}> Doa: </Text>
+                    <View style={{flexDirection: 'row', flex:1,justifyContent:'center',
                         borderWidth: 1, borderColor: '#a2a2a2', borderRadius: 5}}
                     >
                         <TextInput style={{flex: 1, padding: 8,
                                 fontSize: 20}}
-                                value={doa ? doa.toDateString() : null}
+                                value={doa}
                          placeholder='DOA' editable={false}/>
                         <View style={{marginTop: 10}}>
                             <MaterialIcons onPress={showDatepicker}
                              name="date-range" size={35} color="#0481eb" />
                         </View>
-                        {show &&
+                        {show && 
                         <DateTimePicker
                             testID="dateTimePicker"
-                            value={doa}
+                            value={date}
                             mode={'date'}
                             display="default"
                             onChange={onChange}
                         />}
                     </View>    
+                </View>
+                <View style={{flex: 1}}>
+                        <Text style={{fontSize: 12}}> UHID: </Text>
                     <TextInput style={styles.textInput} 
                         placeholder='UHID'
                         value={UHID}
                     onChangeText={(val)=> setUHID(val)}
                     />
+                </View>
                     </View>
-                <View style={{flexDirection:'row', marginTop: 10}}>
-                <TextInput style={styles.textInput} 
-                        placeholder='SPO2'
-                        value={spo2}
-                    onChangeText={(val)=> setSpo2(val)}
-                    />
-                    <TextInput style={styles.textInput} 
-                        placeholder='PR'
-                        value={pr}
-                    onChangeText={(val)=> setPr(val)}
-                    />
-                {/*<Picker
+                <View style={{flexDirection:'row'}}>
+                <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> SPO2: </Text>
+                <Picker
                         selectedValue = {spo2}
                         style={{ flex: 1, borderColor: '#a2a2a2', borderWidth: 1, borderRadius: 5 }}
                         onValueChange={(itemValue, itemIndex) => setSpo2(itemValue)}>
@@ -131,6 +148,9 @@ return(
                         {spo2List.map((x, index) => {
                         return <Picker.Item key={index} label={x} value={x} />})}
                 </Picker>
+            </View>
+            <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> PR: </Text>
                 <Picker
                     selectedValue = {pr}
                     style={{ flex: 1, borderColor: '#a2a2a2', borderWidth: 1, borderRadius: 5}}
@@ -138,33 +158,39 @@ return(
                     <Picker.Item label="PR" value={null} />
                     {prList.map((x, index) => {
                     return <Picker.Item key={index} label={x} value={x} />})}
-                </Picker>*/
-                    }
+                </Picker>
+            </View>
                 </View>
                 <View style={{flexDirection:'row'}}>
+                <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> O2 NIV MV: </Text>
                 <TextInput placeholder='O2 NIV MIV' style={styles.textInput}
                  value={o2_niv_mv} onChangeText={(val)=> setO2_niv_mv(val)}/>
+                </View>
+                <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> O2/MRBM in L: </Text>
                 <TextInput placeholder='O2/NRBM in L' style={styles.textInput}
                 value={o2_niv_mv_level} onChangeText={(val)=> setO2_niv_mv_level(val)}/>
+            </View>
                 </View>
                 <View style={{flexDirection:'row'}}>
-                <TextInput style={styles.textInput} 
-                        placeholder='RR'
-                        value={rr}
-                    onChangeText={(val)=> setRr(val)}
-                    />
-                {/*<Picker
+                <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> RR: </Text>
+                <Picker
                 selectedValue = {rr}
                     style={{ borderWidth: 1, borderColor: '#a2a2a2',
-                    flex: 1, borderRadius: 5, marginTop: 10 }}
+                    flex: 1, borderRadius: 5 }}
                     onValueChange={(itemValue, itemIndex) => setRr(itemValue)}>
                     <Picker.Item label="RR" value={null} />
                     {rrList.map((x, index) => {
                     return <Picker.Item key={index} label={x} value={x} />})}
-                    </Picker>*/
-                    }
+                    </Picker>
+                </View>
+                <View style={{marginTop: 10,flex: 1}}>
+                        <Text style={{fontSize: 12}}> Fresh complaints: </Text>
                 <TextInput placeholder='Fresh complaint' style={styles.textInput}
                 value={complaints} onChangeText={(val)=> setFreshComplaints(val)}/>
+                </View>
                 </View>
                 <Text style={styles.submitButton} onPress={applyFilter}> Apply </Text>
         </ScrollView>
@@ -197,7 +223,6 @@ submitButton: {
     marginTop: 20
 },
     textInput: {
-        marginTop: 10,
         borderWidth: 1,
         borderColor: '#a2a2a2',
         borderRadius: 5,

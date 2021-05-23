@@ -7,30 +7,20 @@ const patientRouter = express.Router()
 patientRouter.post('/add', async (req,res) => {
     try {
         const patient_details = req.body 
+        const {hospital_id,UHID,...record} = patient_details
         const patient = await patientModel.findOne({UHID: patient_details.UHID})
         const date = new Date()
-        const timestamp = `${date.toLocaleDateString().split('/').join('-')} ${date.getHours()}-${date.getMinutes()}`
-        const doa = date.toLocaleDateString()
+        const timestamp = `${date.toLocaleDateString()} ${date.getHours()}:${date.getMinutes()}`
+        console.log(patient_details);
         if(patient) res.send('patient already exist.')
         else {
-        const newData = new patientModel({...patient_details,doa})
+        const newData = new patientModel({...patient_details})
         await newData.save()
         const newRecordData = new patientRecordModel({
-            UHID: patient_details.UHID,
-            hospital_id: patient_details.hospital_id,
+            UHID,
+            hospital_id,
             record: {
-                ward_name: patient_details.ward_name,
-                doa: doa,
-                pr: patient_details.pr,
-                bp: patient_details.bp,
-                rr: patient_details.rr,
-                spo2: patient_details.spo2,
-                o2_niv_mv: patient_details.o2_niv_mv,
-                complaints: patient_details.complaints,
-                o2_niv_mv_level: patient_details.o2_niv_mv_level,
-                doctors: patient_details.duty_doctor,
-                nurses: patient_details.duty_nurse,
-                bed: patient_details.bed,
+                ...record,
                 timestamp
             }
         })
@@ -48,7 +38,8 @@ patientRouter.post('/add/record', async (req,res)=> {
     try{
         const {UHID,hospital_id,...record} = req.body
         const date = new Date()
-        const timestamp = `${date.toLocaleDateString().split('/').join('-')} ${date.getHours()}-${date.getMinutes()}`
+        const timestamp = `${date.toLocaleDateString()} ${date.getHours()}:${date.getMinutes()}`
+        console.log(record);
         await patientRecordModel.findOneAndUpdate(
             {$and:[{ UHID,hospital_id }]},{$push: {record: {...record,timestamp}}});
         const {ward_name,bed,pr,bp,rr,spo2,o2_niv_mv,doa,age
