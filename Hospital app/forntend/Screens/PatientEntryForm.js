@@ -11,12 +11,7 @@ const PatientEntryForm = () => {
     const [ward_name, setWard_name] = useState('');
     const [UHID, setUHID] = useState('');
     const [hospital_no, setHospital_no] = useState('');
-<<<<<<< HEAD:Hospital app/forntend/screens/PatientEntryForm.js
     const [bed, setbed] = useState('');
-=======
-    const [bed, setBed] = useState('');
-    const [doa, setDoa] = useState('');
->>>>>>> 9985279c8414b7e94ca73161e89f1a6ef524f21f:Hospital app/forntend/Screens/PatientEntryForm.js
     const [age, setAge] = useState('');
     const [sex, setSex] = useState('');
     const [pr, setPr] = useState('');
@@ -69,15 +64,7 @@ const PatientEntryForm = () => {
             return false;
         }
         if (!bed.trim()) {
-<<<<<<< HEAD:Hospital app/forntend/screens/PatientEntryForm.js
             alert('Please Enter Bed type');
-=======
-            alert('Please Enter Bed Type!');
-            return false;
-        }
-        if (!doa.trim()) {
-            alert('Please Enter DOA');
->>>>>>> 9985279c8414b7e94ca73161e89f1a6ef524f21f:Hospital app/forntend/Screens/PatientEntryForm.js
             return false;
         }
         if (!age.trim()) {

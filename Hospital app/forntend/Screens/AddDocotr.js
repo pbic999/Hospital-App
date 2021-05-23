@@ -122,21 +122,9 @@ const AddDocotr = () => {
             qualification,
             password,
             role: 'doctor'
-<<<<<<< HEAD
         }).then((res) => {alert("Doctor successfully added!");setLoading(false)})
         .catch((err) => {alert('Moblie no already used. Please try with another no.');
         setLoading(false)});
-=======
-        }).then((res) => {console.log(res.data);alert("Doctor successfully added!");})
-        .catch((err) => {console.log('user already exist');alert('user already exists')});
-
-        setName('');
-        setMobile_no('');
-        setGender('');
-        setDesignation('');
-        setQualification('');
-        setPassword('');
->>>>>>> 9985279c8414b7e94ca73161e89f1a6ef524f21f
     }
 
     return (

@@ -93,11 +93,7 @@ const AddHospital = () => {
     };
 
     const submitHandler = (e) => {
-<<<<<<< HEAD
         setLoading(true)
-=======
-        if (!checkTextInput()) return;
->>>>>>> 9985279c8414b7e94ca73161e89f1a6ef524f21f
         axios.post('http://192.168.0.106:5000/user/add/admin',{
                 hospital_name, 
                 branch,
